@@ -54,7 +54,7 @@ CREATE TABLE adminstrators
     PRIMARY KEY(id)
 );
 
-INSERT INTO users(first_name, last_name, email, password, num_contribution) VALUES ('testuser', 'testpass', 'test@test.com', 'testpass', 0);
+INSERT INTO users(first_name, last_name, email, password, num_contributions) VALUES ('testuser', 'testpass', 'test@test.com', 'testpass', 0);
 INSERT INTO contributions (user_id, contribution_name, isbn_num, book_rating, book_price, description) VALUES ('1', 'Book1', '0001', '', 5.99, 'test book1');
 INSERT INTO contributions (user_id, contribution_name, isbn_num, book_rating, book_price, description) VALUES ('1', 'Book2', '0002', '', 6.99, 'test book2');
 INSERT INTO contributions (user_id, contribution_name, isbn_num, book_rating, book_price, description) VALUES ('1', 'Book3', '0003', '', 7.99, 'test book3');
