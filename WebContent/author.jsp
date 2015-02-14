@@ -39,7 +39,7 @@ try{
 	
 	String getWorks = "SELECT * FROM contributions JOIN users ON users.id = contributions.user_id WHERE users.id = '"+author_id+"'";
 	Statement s1 = connection.createStatement();
-	ResultSet rs1 = s.executeQuery(getWorks);
+	ResultSet rs1 = s1.executeQuery(getWorks);
 	
 	if(rs1 == null || !rs1.first())
 	{
@@ -55,7 +55,7 @@ try{
 		out.println("</tr>");
 		out.println("<td>"+ rs1.getInt(1) + "</td>");
 		out.println("<td>"+ rs1.getString(3) + "</td>");
-		out.println("<td>"+ rs1.getInt(4) + "</td>");
+		out.println("<td>"+ rs1.getString(4) + "</td>");
 		out.println("<td>"+ rs1.getInt(5) + "</td>");
 		out.println("<td>"+ rs1.getDouble(6) + "</td>");
 		out.println("<td>"+ rs1.getString(7)+ "</td>");
