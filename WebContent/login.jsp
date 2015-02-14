@@ -20,3 +20,35 @@
 </form>
 
 <%-- TO ADD: LOGIN JAVA CODE --%>
+<%
+if(request.getMethod().equals("POST") && request.getParameter("username") != null && request.getParameter("password") != null)
+{
+try
+{  
+	String email = request.getParameter("username");
+	String password = request.getParameter("password");
+	Class.forName("com.mysql.jdbc.Driver").newInstance();
+	Connection connection = DriverManager.getConnection("jdbc:mysql:///" + "authorsdb","testuser","testpass");
+	
+	Statement s = connection.createStatement();
+	out.println(email + " " + password);
+	ResultSet rs = s.executeQuery("SELECT * FROM user WHERE email = '"+email+"' AND password = '"+password+"'");
+	
+	if(rs.next())
+	{
+		if(rs.getString(4).equals(email) && rs.getString(5).equals(password))
+		{
+			out.println("Welcome to The Hill. Redirecting.");
+			response.sendRedirect("/Bookstore/search.jsp");
+		}
+	}
+	else
+	{
+		throw new SQLException();
+	}
+} catch (Exception e)
+{
+	out.println("You are currently not logged in");
+}
+}
+%>
