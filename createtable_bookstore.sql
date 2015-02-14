@@ -1,3 +1,10 @@
+DROP DATABASE IF EXISTS authorsdb;
+
+CREATE DATABASE authorsdb;
+ 
+USE authorsdb;
+
+
 CREATE TABLE users
 (
 	id int NOT NULL AUTO_INCREMENT,
