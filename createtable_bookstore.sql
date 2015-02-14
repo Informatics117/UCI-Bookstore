@@ -21,7 +21,7 @@ CREATE TABLE contributions
 	id int NOT NULL AUTO_INCREMENT,
     user_id int NOT NULL,
     contribution_name VARCHAR(255) NOT NULL,
-    isbn_num int NOT NULL,
+    isbn_num VARCHAR(255) NOT NULL,
     book_rating int,
     book_price double,
     description text,
