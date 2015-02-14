@@ -46,3 +46,10 @@ CREATE TABLE adminstrators
     num_user_appr int,
     PRIMARY KEY(id)
 );
+
+INSERT INTO contributions (user_id, contribution_name, isbn_num, book_rating, book_price, description) VALUES ('1', 'Book1', '0001', '', 5.99, 'test book1');
+INSERT INTO contributions (user_id, contribution_name, isbn_num, book_rating, book_price, description) VALUES ('1', 'Book2', '0002', '', 6.99, 'test book2');
+INSERT INTO contributions (user_id, contribution_name, isbn_num, book_rating, book_price, description) VALUES ('1', 'Book3', '0003', '', 7.99, 'test book3');
+INSERT INTO contributions (user_id, contribution_name, isbn_num, book_rating, book_price, description) VALUES ('1', 'Book4', '0004', '', 8.99, 'test book4');
+INSERT INTO contributions (user_id, contribution_name, isbn_num, book_rating, book_price, description) VALUES ('1', 'Book5', '0005', '', 9.99, 'test book1');
+INSERT INTO contributions (user_id, contribution_name, isbn_num, book_rating, book_price, description) VALUES ('1', 'Book6', '0006', '', 19.99, 'test book1');
