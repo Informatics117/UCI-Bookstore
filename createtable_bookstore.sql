@@ -55,9 +55,9 @@ CREATE TABLE adminstrators
 );
 
 INSERT INTO users(first_name, last_name, email, password, num_contributions) VALUES ('testuser', 'testpass', 'test@test.com', 'testpass', 0);
-INSERT INTO contributions (user_id, contribution_name, isbn_num, book_rating, book_price, description) VALUES ('1', 'Book1', '0001', '', 5.99, 'test book1');
-INSERT INTO contributions (user_id, contribution_name, isbn_num, book_rating, book_price, description) VALUES ('1', 'Book2', '0002', '', 6.99, 'test book2');
-INSERT INTO contributions (user_id, contribution_name, isbn_num, book_rating, book_price, description) VALUES ('1', 'Book3', '0003', '', 7.99, 'test book3');
-INSERT INTO contributions (user_id, contribution_name, isbn_num, book_rating, book_price, description) VALUES ('1', 'Book4', '0004', '', 8.99, 'test book4');
-INSERT INTO contributions (user_id, contribution_name, isbn_num, book_rating, book_price, description) VALUES ('1', 'Book5', '0005', '', 9.99, 'test book1');
-INSERT INTO contributions (user_id, contribution_name, isbn_num, book_rating, book_price, description) VALUES ('1', 'Book6', '0006', '', 19.99, 'test book1');
+INSERT INTO contributions (user_id, contribution_name, isbn_num, book_rating, book_price, description) VALUES ('1', 'Book1', '0001', 0, 5.99, 'test book1');
+INSERT INTO contributions (user_id, contribution_name, isbn_num, book_rating, book_price, description) VALUES ('1', 'Book2', '0002', 0, 6.99, 'test book2');
+INSERT INTO contributions (user_id, contribution_name, isbn_num, book_rating, book_price, description) VALUES ('1', 'Book3', '0003', 0, 7.99, 'test book3');
+INSERT INTO contributions (user_id, contribution_name, isbn_num, book_rating, book_price, description) VALUES ('1', 'Book4', '0004', 0, 8.99, 'test book4');
+INSERT INTO contributions (user_id, contribution_name, isbn_num, book_rating, book_price, description) VALUES ('1', 'Book5', '0005', 0, 9.99, 'test book1');
+INSERT INTO contributions (user_id, contribution_name, isbn_num, book_rating, book_price, description) VALUES ('1', 'Book6', '0006', 0, 19.99, 'test book1');
