@@ -16,6 +16,17 @@ CREATE TABLE users
     PRIMARY KEY(id)
 );
 
+CREATE TABLE pending_users
+(
+	id int NOT NULL AUTO_INCREMENT,
+    first_name VARCHAR(255),
+    last_name VARCHAR(255),
+    email VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    info TEXT NOT NULL,
+    PRIMARY KEY(id)
+);
+
 CREATE TABLE contributions
 (
 	id int NOT NULL AUTO_INCREMENT,
@@ -53,6 +64,8 @@ CREATE TABLE adminstrators
     num_user_appr int,
     PRIMARY KEY(id)
 );
+
+
 
 INSERT INTO users(first_name, last_name, email, password, num_contributions) VALUES ('testuser', 'testpass', 'test@test.com', 'testpass', 0);
 INSERT INTO contributions (user_id, contribution_name, isbn_num, book_rating, book_price, description) VALUES ('1', 'Book1', '0001', 0, 5.99, 'test book1');
