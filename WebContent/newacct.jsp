@@ -24,7 +24,7 @@ if(request.getMethod().equals("POST") && request.getParameter("first_name") != n
 {
 	try{
 	Class.forName("com.mysql.jdbc.Driver").newInstance();
-	Connection connection = DriverManager.getConnection("jdbc:mysql:///" + "authorsdb","testuser","testpass");
+	Connection connection = DriverManager.getConnection("jdbc:mysql:///" + "bookstoredb","testuser","testpass");
 	
 	String first_name = request.getParameter("first_name");
 	String last_name = request.getParameter("last_name");

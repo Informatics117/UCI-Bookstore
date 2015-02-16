@@ -14,7 +14,7 @@
 <%
 try{
 	Class.forName("com.mysql.jdbc.Driver").newInstance();
-	Connection connection = DriverManager.getConnection("jdbc:mysql:///" + "authorsdb","testuser","testpass");
+	Connection connection = DriverManager.getConnection("jdbc:mysql:///" + "bookstoredb","testuser","testpass");
 	
 	int author_id = 0;
 	try{

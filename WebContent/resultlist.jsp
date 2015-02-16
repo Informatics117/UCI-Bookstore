@@ -15,7 +15,7 @@
 <%
 try{
 	Class.forName("com.mysql.jdbc.Driver").newInstance();
-	Connection connection = DriverManager.getConnection("jdbc:mysql:///" + "authorsdb","testuser","testpass");
+	Connection connection = DriverManager.getConnection("jdbc:mysql:///" + "bookstoredb","testuser","testpass");
 	
 	String book_id = request.getParameter("book_id");
 	String book_title = request.getParameter("book_title");
@@ -49,12 +49,14 @@ try{
 	}
 	else
 	{
-		
-	int author_id = rs1.getInt(8);
+
 	out.println("<table><tr>");
 	out.println("<tr><td>BOOK ID</td><td>Author Name</td><td>BOOK Title</td><td>ISBN Number</td><td>Rating</td><td>Price</td><td>Description</td></tr>");
 	while(rs1.next())
 	{
+		int author_id = rs1.getInt(8);
+		
+		
 		out.println("</tr>");
 		out.println("<td>"+ rs1.getInt(1) + "</td>");
 		out.println("<td><a href = '/Bookstore/author.jsp?author_id="+author_id+"'>" + rs1.getString(9) + " " + rs1.getString(10) + "</a></td>");
