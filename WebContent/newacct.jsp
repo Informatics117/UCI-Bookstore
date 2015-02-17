@@ -1,23 +1,52 @@
+<jsp:include page="header.jsp" flush="true">
+<jsp:param name="pageName" value="New Account"/>
+</jsp:include>
+
 <%-- REQUIRED JAVA IMPORTS --%>
 <%@page
-	import="java.sql.*,
- javax.sql.*,
- java.io.IOException,
- javax.servlet.http.*,
- javax.servlet.*"%>
+import="java.sql.*,
+javax.sql.*,
+java.io.IOException,
+javax.servlet.http.*,
+javax.servlet.*"%>
 
-
-<%-- ACCOUNT CREATION PAGE --%>
-<FORM METHOD="POST">
-	First Name*: <INPUT TYPE="TEXT" NAME="first_name"><BR>
-	Last Name*: <INPUT TYPE="TEXT" NAME="last_name"><BR> 
-	Email*: <INPUT TYPE="TEXT" NAME="email"><BR> 
-	Password*: <INPUT TYPE="password" NAME="password"><BR> 
-	More Info*: <textarea name="info" cols="50" rows="5">Former UCI email, graduation date, etc.</textarea><BR>
-		
-	<INPUT TYPE="SUBMIT" VALUE="Search" NAME="submit">
-</FORM>
-
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-4 col-sm-offset-4">
+				<h2>Add a New Account</h2>
+			</div>
+		</div>
+		<%-- ACCOUNT CREATION PAGE --%>
+		<div class="row">
+			<div class="col-sm-4 col-sm-offset-4">
+				<form method="POST">
+					<div class="form-group">
+						<label for="first">First Name*: </label>
+						<input type="text" class="form-control" name="first_name" id="first">
+					</div>
+					<div class="form-group">
+						<label for="last">Last Name*: </label>
+						<input type="text" class="form-control" name="last_name" id="last">
+					</div>
+					<div class="form-group">
+						<label for="e_mail">Email*: </label>
+						<input type="text" class="form-control" name="email" id="e_mail">
+					</div>
+					<div class="form-group">
+						<label for="pass">Password*: </label>
+						<input type="password" class="form-control" name="password" id="pass">
+					</div>
+					<div class="form-group">
+						<label for="inf">More Info*: </label>
+						<textarea name="info" class="form-control" cols="50" rows="5" id="inf" placeholder="Former UCI email, graduation date, etc."></textarea>
+					</div>
+					<button type="submit" class="btn btn-default">Submit</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
 <%
 if(request.getMethod().equals("POST") && request.getParameter("first_name") != null && request.getParameter("last_name") != null
 	&& request.getParameter("email") != null && request.getParameter("password") != null && request.getParameter("info") != null)
@@ -57,9 +86,6 @@ if(request.getMethod().equals("POST") && request.getParameter("first_name") != n
 	
 	
 }
-
-
-
 
 %>
 
