@@ -1,3 +1,7 @@
+<jsp:include page="header.jsp" flush="true">
+    <jsp:param name="pageName" value="Login"/>
+</jsp:include>
+
 <%-- REQUIRED JAVA IMPORTS --%>
 <%@page
 	import="java.sql.*,
@@ -7,7 +11,16 @@
  javax.servlet.*"%>
 
 <%-- LOGIN HTML CODE --%>
-<form method="POST">
+<body>
+	<div class="container">
+	<div class="row">
+		<div class ="col-sm-4 col-sm-offset-4">
+			<h2>Login</h2>
+		</div>
+	</div>
+	<div class="row">
+	<div class="col-sm-4 col-sm-offset-4">
+	<form method="POST">
             <div class="form-group">
                 <label for="username">Email address</label>
                 <input type="email" class="form-control" id="username" name="username">
@@ -17,8 +30,10 @@
                 <input type="password" class="form-control" id="password" name="password">
             </div>
             <button type="submit" class="btn btn-primary">Login</button>
-</form>
-
+	</form>
+	</div>
+	</div>
+</body>
 <%-- TO ADD: LOGIN JAVA CODE --%>
 <%
 if(request.getMethod().equals("POST") && request.getParameter("username") != null && request.getParameter("password") != null)
@@ -28,11 +43,11 @@ try
 	String email = request.getParameter("username");
 	String password = request.getParameter("password");
 	Class.forName("com.mysql.jdbc.Driver").newInstance();
-	Connection connection = DriverManager.getConnection("jdbc:mysql:///" + "authorsdb","testuser","testpass");
+	Connection connection = DriverManager.getConnection("jdbc:mysql:///" + "bookstoredb","testuser","testpass");
 	
 	Statement s = connection.createStatement();
 	out.println(email + " " + password);
-	ResultSet rs = s.executeQuery("SELECT * FROM user WHERE email = '"+email+"' AND password = '"+password+"'");
+	ResultSet rs = s.executeQuery("SELECT * FROM users WHERE email = '"+email+"' AND password = '"+password+"'");
 	
 	if(rs.next())
 	{
@@ -48,7 +63,7 @@ try
 	}
 } catch (Exception e)
 {
-	out.println("You are currently not logged in");
+	out.println(e);
 }
 }
 %>

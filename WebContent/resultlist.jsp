@@ -1,3 +1,7 @@
+<jsp:include page="header.jsp" flush="true">
+<jsp:param name="pageName" value="Results"/>
+</jsp:include>
+
 <%-- REQUIRED JAVA IMPORTS --%>
 <%@page
 	import="java.sql.*,
@@ -11,7 +15,14 @@
 	REQUIREMENTS: if user is not an administrator, the page will only display regular functions.
 	If user is an administrator, the administrator will have the option to delete or possibly edit book information.
 --%>
-
+<body>
+	<div class="container">
+	<div class="row">
+		<div class="col-sm-4">
+			<h4>Search Results</h4>
+		</div>
+	</div>
+	<hr>
 <%
 try{
 	Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -50,29 +61,73 @@ try{
 	else
 	{
 
-	out.println("<table><tr>");
-	out.println("<tr><td>BOOK ID</td><td>Author Name</td><td>BOOK Title</td><td>ISBN Number</td><td>Rating</td><td>Price</td><td>Description</td></tr>");
-	out.println(rs1.getInt(1));
 	do
 	{
+		out.println("<div class='row'>");
+
+		out.println("<div class='col-sm-4'>");
+		out.println("<img src='https://images-na.ssl-images-amazon.com/images/I/51XMDomIriL._UY250_.jpg' width='50%' height='200px'/>");
+		out.println("</div>");
 		int author_id = rs1.getInt(8);
+
+		out.println("<div class='col-sm-8'>");
+		//First Row
+		out.println("<div class='row'>");
+		out.println("<div class='col-sm-4'>");
+		out.println("<p>"+ rs1.getString(3) + "</p>");
+		out.println("</div>");
+		out.println("<div class='col-sm-4'>");
+		out.println("<img src='http://www.puz.ca/images/stars-"+rs1.getInt(5)+".gif'/>");
+		out.println("</div>");
+		out.println("</div>");
+		//Second row
+		out.println("<div class='row'>");
+		out.println("<div class='col-sm-4'>");
+		out.println("<p>Written By:</p>");
+		out.println("</div>");
+		out.println("<div class='col-sm-4'>");
+		out.println("<a href = '/Bookstore/author.html'>" + rs1.getString(9) + rs1.getString(10) + "</a>");
+		out.println("</div>");
+		out.println("</div>");
+		//Third Row
+		out.println("<div class='row'>");
+		out.println("<div class='col-sm-4'>");
+		out.println("<p>Paperback:</p>");
+		out.println("</div>");
+		out.println("<div class='col-sm-4'>");
+		out.println("<p>$19.99</p>");
+		out.println("</div>");
+		out.println("<div class='col-sm-4'>");
+		out.println("<p>Buy Now</p>");
+		out.println("</div>");
+		out.println("</div>");
+		//Fourth Row
+		out.println("<div class='row'>");
+		out.println("<div class='col-sm-4'>");
+		out.println("<p>Hardcover:</p>");
+		out.println("</div>");
+		out.println("<div class='col-sm-4'>");
+		out.println("<p>$29.99</p>");
+		out.println("</div>");
+		out.println("<div class='col-sm-4'>");
+		out.println("<p>Buy Now</p>");
+		out.println("</div>");
+		out.println("</div>");
+
+		out.println("</div>");
+		out.println("</div>");
+
 		
-		
-		out.println("</tr>");
-		out.println("<td>"+ rs1.getInt(1) + "</td>");
-		out.println("<td><a href = '/Bookstore/author.jsp?author_id="+author_id+"'>" + rs1.getString(9) + " " + rs1.getString(10) + "</a></td>");
-		out.println("<td>"+ rs1.getString(3) + "</td>");
-		out.println("<td>"+ rs1.getString(4) + "</td>");
-		out.println("<td>"+ rs1.getInt(5) + "</td>");
-		out.println("<td>"+ rs1.getDouble(6) + "</td>");
-		out.println("<td>"+ rs1.getString(7)+ "</td>");
-		out.println("</tr>");
+		//out.println("<td><a href = '/Bookstore/author.jsp?author_id="+author_id+"'>" + rs1.getString(9) + " " + rs1.getString(10) + "</a></td>");
+		out.println("<hr>");
 	} while(rs1.next());
-	
-	out.println("</table>");
 	}
 } catch (Exception e)
 {
 	 System.out.println(e);
 }
+out.println("</div>");
+
 %>
+	</div>
+</body>
