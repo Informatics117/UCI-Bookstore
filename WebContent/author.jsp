@@ -50,7 +50,7 @@ try{
 		
 	out.println("<table><tr>");
 	out.println("<tr><td>BOOK ID</td><td>BOOK Title</td><td>ISBN Number</td><td>Rating</td><td>Price</td><td>Description</td></tr>");
-	while(rs1.next())
+	do
 	{
 		out.println("</tr>");
 		out.println("<td>"+ rs1.getInt(1) + "</td>");
@@ -62,7 +62,7 @@ try{
 		out.println("</tr>");
 		
 		//http://localhost:8080/Bookstore/author.jsp?author_id=1
-	}
+	} while(rs1.next());
 	
 	out.println("</table>");
 	

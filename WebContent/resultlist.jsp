@@ -52,7 +52,8 @@ try{
 
 	out.println("<table><tr>");
 	out.println("<tr><td>BOOK ID</td><td>Author Name</td><td>BOOK Title</td><td>ISBN Number</td><td>Rating</td><td>Price</td><td>Description</td></tr>");
-	while(rs1.next())
+	out.println(rs1.getInt(1));
+	do
 	{
 		int author_id = rs1.getInt(8);
 		
@@ -66,7 +67,7 @@ try{
 		out.println("<td>"+ rs1.getDouble(6) + "</td>");
 		out.println("<td>"+ rs1.getString(7)+ "</td>");
 		out.println("</tr>");
-	}
+	} while(rs1.next());
 	
 	out.println("</table>");
 	}
