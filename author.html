@@ -16,9 +16,31 @@
       <div class="col-sm-4">
         <h2 align="center">J.K Rowling</h2>
         <img src="http://media.npr.org/assets/img/2012/01/13/bernier-c-michele-mattei_custom-a653b114033062b07b4db8a308fb743230cc89ee-s800-c15.jpg" width="100%"/>
-        <div class="btn-group" role="group" style="width:100%">
-          <a href="http://www.google.com" class="btn btn-default" type="button" style="width:50%">Tweet</a>
-          <a href="http://www.google.com" class="btn btn-default" type="button" style="width:50%">Like</a>
+			<div class="btn-group" role="group" style="width:100%">
+	
+		  <a class="twitter-share-button, btn btn-default" href="https://twitter.com/share" type="button" style="width:50%"> Tweet</a>
+		  <script>
+			window.twttr=(function(d,s,id){
+					var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};
+					if(d.getElementById(id))return;
+					js=d.createElement(s);
+					js.id=id;
+					js.src="https://platform.twitter.com/widgets.js";
+					fjs.parentNode.insertBefore(js,fjs);
+					t._e=[];
+					t.ready=function(f){
+							t._e.push(f);
+						};
+					return t;
+					}(document,"script","twitter-wjs"));
+		  </script>
+		  
+		 <a class="btn btn-default" href="javascript:fbshareCurrentPage()" target="_blank" alt="Share on Facebook" type="button" style="width:50%">Share</a>
+
+		<script language="javascript">
+    function fbshareCurrentPage()
+    {window.open("https://www.facebook.com/sharer/sharer.php?u="+escape(window.location.href)+"&t="+document.title, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false; }
+</script>
         </div>
       </div>
       <div class="col-sm-8">
