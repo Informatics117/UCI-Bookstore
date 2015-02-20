@@ -12,6 +12,9 @@ CREATE TABLE users
     email VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     num_contributions int,
+    user_displayname VARCHAR(255),
+    user_description text,
+    user_photourl VARCHAR(255),
     PRIMARY KEY(id)
 );
 
@@ -52,6 +55,15 @@ CREATE TABLE pending_contributions
     FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
+CREATE TABLE reviews
+(
+	contribution_id int NOT NULL,
+    poster_id int not NULL,
+    review_text text,
+    FOREIGN KEY(contribution_id) REFERENCES contributions(id) ON DELETE cascade,
+    FOREIGN KEY(poster_id) REFERENCES users(id) ON DELETE cascade
+);
+
 CREATE TABLE adminstrators
 (
 	id int NOT NULL AUTO_INCREMENT,
@@ -64,14 +76,14 @@ CREATE TABLE adminstrators
     PRIMARY KEY(id)
 );
 
-INSERT INTO users(first_name, last_name, email, password, num_contributions) VALUES ('testuser', 'testpass', 'test@test.com', 'testpass', 6);
-INSERT INTO users VALUES (DEFAULT, 'Suzanne', 'Collins', 'suzanne@uci.edu', 'collins', 3);
-INSERT INTO users VALUES (DEFAULT, 'J.K.', 'Rowling', 'jk@uci.edu', 'rowling', 5);
-INSERT INTO users VALUES (DEFAULT, 'Harper', 'Lee', 'harper@uci.edu', 'lee', 1);
-INSERT INTO users VALUES (DEFAULT, 'Stephenie', 'Meyer', 'stephenie@uci.edu', 'meyer', 2);
-INSERT INTO users VALUES (DEFAULT, 'Jane', 'Austen', 'jane@uci.edu', 'austen', 2);
-INSERT INTO users VALUES (DEFAULT, 'Margaret', 'Mitchell', 'margaret@uci.edu', 'mitchell', 7);
-INSERT INTO users VALUES (DEFAULT, 'Jane', 'Lee', 'jane@uci.edu', 'lee', 3);
+INSERT INTO users (first_name, last_name, email, password, num_contributions) VALUES ('testuser', 'testpass', 'test@test.com', 'testpass', 6);
+INSERT INTO users (first_name, last_name, email, password, num_contributions) VALUES ('Suzanne', 'Collins', 'suzanne@uci.edu', 'collins', 3);
+INSERT INTO users (first_name, last_name, email, password, num_contributions) VALUES ( 'J.K.', 'Rowling', 'jk@uci.edu', 'rowling', 5);
+INSERT INTO users (first_name, last_name, email, password, num_contributions) VALUES ( 'Harper', 'Lee', 'harper@uci.edu', 'lee', 1);
+INSERT INTO users (first_name, last_name, email, password, num_contributions) VALUES ( 'Stephenie', 'Meyer', 'stephenie@uci.edu', 'meyer', 2);
+INSERT INTO users (first_name, last_name, email, password, num_contributions) VALUES ( 'Jane', 'Austen', 'jane@uci.edu', 'austen', 2);
+INSERT INTO users (first_name, last_name, email, password, num_contributions) VALUES ( 'Margaret', 'Mitchell', 'margaret@uci.edu', 'mitchell', 7);
+INSERT INTO users (first_name, last_name, email, password, num_contributions) VALUES ( 'Jane', 'Lee', 'jane@uci.edu', 'lee', 3);
 
 INSERT INTO pending_users VALUES (DEFAULT, 'Jacob', 'Michaelson', 'jacob@uci.edu', 'michaelson', 0);
 
