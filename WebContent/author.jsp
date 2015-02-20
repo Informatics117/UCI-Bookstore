@@ -54,7 +54,7 @@ try{
 	{
 		out.println("</tr>");
 		out.println("<td>"+ rs1.getInt(1) + "</td>");
-		out.println("<td>"+ rs1.getString(3) + "</td>");
+		out.println("<td><a href = '/Bookstore/book.jsp?book_id="+rs1.getInt(1)+"'>"+ rs1.getString(3) + "</a></td>");
 		out.println("<td>"+ rs1.getString(4) + "</td>");
 		out.println("<td>"+ rs1.getInt(5) + "</td>");
 		out.println("<td>"+ rs1.getDouble(6) + "</td>");

@@ -86,7 +86,7 @@ try{
 		out.println("<p>Written By:</p>");
 		out.println("</div>");
 		out.println("<div class='col-sm-4'>");
-		out.println("<a href = '/Bookstore/author.html'>" + rs1.getString(9) + rs1.getString(10) + "</a>");
+		out.println("<a href = '/Bookstore/author.jsp?author_id="+author_id+"'>"+ rs1.getString(9) + rs1.getString(10) + "</a>");
 		out.println("</div>");
 		out.println("</div>");
 		//Third Row
