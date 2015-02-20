@@ -55,6 +55,15 @@ CREATE TABLE pending_contributions
     FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
+CREATE TABLE pending_reviews
+(
+	contribution_id int NOT NULL,
+    poster_id int not NULL,
+    review_text text,
+    FOREIGN KEY(contribution_id) REFERENCES contributions(id) ON DELETE cascade,
+    FOREIGN KEY(poster_id) REFERENCES users(id) ON DELETE cascade
+);
+
 CREATE TABLE reviews
 (
 	contribution_id int NOT NULL,
