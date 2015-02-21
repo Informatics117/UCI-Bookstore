@@ -97,6 +97,26 @@ CREATE TABLE adminstrators
     PRIMARY KEY(id)
 );
 
+DELIMITER $$
+
+CREATE PROCEDURE approve_review(
+	
+_review_id INT
+)
+BEGIN
+
+	START TRANSACTION;
+
+	SELECT contribution_id, poster_id, review_text FROM pending_reviews WHERE id = _review_id INTO @contribution_id, @poster_id, @review_text;
+	INSERT INTO reviews (contribution_id, poster_id, review_text) VALUES (@contribution_id, @poster_id, @review_text);
+	DELETE FROM pending_reviews WHERE id = _review_id;
+
+	COMMIT;
+
+END $$
+
+DELIMITER ;
+
 INSERT INTO users (first_name, last_name, email, password, num_contributions) VALUES ('testuser', 'testpass', 'test@test.com', 'testpass', 6);
 INSERT INTO users (first_name, last_name, email, password, num_contributions) VALUES ('Suzanne', 'Collins', 'suzanne@uci.edu', 'collins', 3);
 INSERT INTO users (first_name, last_name, email, password, num_contributions) VALUES ( 'J.K.', 'Rowling', 'jk@uci.edu', 'rowling', 5);
