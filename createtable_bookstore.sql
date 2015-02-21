@@ -100,7 +100,6 @@ CREATE TABLE adminstrators
 DELIMITER $$
 
 CREATE PROCEDURE approve_review(
-	
 _review_id INT
 )
 BEGIN
@@ -110,6 +109,25 @@ BEGIN
 	SELECT contribution_id, poster_id, review_text FROM pending_reviews WHERE id = _review_id INTO @contribution_id, @poster_id, @review_text;
 	INSERT INTO reviews (contribution_id, poster_id, review_text) VALUES (@contribution_id, @poster_id, @review_text);
 	DELETE FROM pending_reviews WHERE id = _review_id;
+
+	COMMIT;
+
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE PROCEDURE approve_user(
+_user_id INT
+)
+BEGIN
+
+	START TRANSACTION;
+
+	SELECT first_name, last_name, email, password FROM pending_users WHERE id = _user_id INTO @first_name, @last_name, @email, @password;
+	INSERT INTO users (first_name, last_name, email, password) VALUES (@first_name, @last_name, @email, @password);
+	DELETE FROM pending_users WHERE id = _user_id;
 
 	COMMIT;
 
