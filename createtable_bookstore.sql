@@ -138,7 +138,7 @@ DELIMITER ;
 DELIMITER $$
 
 CREATE PROCEDURE approve_contribution(
-_contributin_id INT
+_contribution_id INT
 )
 BEGIN
 
