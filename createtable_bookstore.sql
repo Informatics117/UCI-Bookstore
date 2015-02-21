@@ -85,7 +85,7 @@ CREATE TABLE reviews
     FOREIGN KEY(poster_id) REFERENCES users(id) ON DELETE cascade
 );
 
-CREATE TABLE adminstrators
+CREATE TABLE administrators
 (
 	id int NOT NULL AUTO_INCREMENT,
 	first_name VARCHAR(255),
