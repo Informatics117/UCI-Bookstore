@@ -135,6 +135,25 @@ END $$
 
 DELIMITER ;
 
+DELIMITER $$
+
+CREATE PROCEDURE approve_contribution(
+_contributin_id INT
+)
+BEGIN
+
+	START TRANSACTION;
+
+	SELECT user_id, contribution_name, isbn_num, book_rating,book_price, description FROM pending_contributions WHERE id = _contribution_id INTO @user_id, @contribution_name, @isbn_num, @book_rating, @book_price, @description;
+	INSERT INTO contributions (user_id, contribution_name, isbn_num, book_rating,book_price, description) VALUES (@user_id, @contribution_name, @isbn_num, @book_rating, @book_price, @description);
+	DELETE FROM pending_contributions WHERE id = _contribution_id;
+
+	COMMIT;
+
+END $$
+
+DELIMITER ;
+
 INSERT INTO users (first_name, last_name, email, password, num_contributions) VALUES ('testuser', 'testpass', 'test@test.com', 'testpass', 6);
 INSERT INTO users (first_name, last_name, email, password, num_contributions) VALUES ('Suzanne', 'Collins', 'suzanne@uci.edu', 'collins', 3);
 INSERT INTO users (first_name, last_name, email, password, num_contributions) VALUES ( 'J.K.', 'Rowling', 'jk@uci.edu', 'rowling', 5);
