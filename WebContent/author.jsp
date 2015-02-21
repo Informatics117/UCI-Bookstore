@@ -28,13 +28,23 @@ try{
 	Statement s = connection.createStatement();
 	ResultSet rs = s.executeQuery(getAuthor);
 
+	Statement getBiography = connection.createStatement();
+	ResultSet bioInfo = getBiography.executeQuery("SELECT * FROM biography JOIN users on biography.user_id = users.id WHERE users.id = '"+author_id+"'"); 
+	
 	if (rs == null || !rs.first())
 	{
 		out.println("Author could not be found. <BR>");
 	}
 	else
 	{
-		out.println("Author Name: " + rs.getString(2) + " " + rs.getString(3) + "<BR>");
+		if(bioInfo == null || !bioInfo.first())
+		{
+			out.println("Author does not have a bio yet.");
+		}
+		else
+		{
+			out.println("Author Name: " + bioInfo.getString(2) + "<BR>");
+		}
 	}
 	
 	String getWorks = "SELECT * FROM contributions JOIN users ON users.id = contributions.user_id WHERE users.id = '"+author_id+"'";

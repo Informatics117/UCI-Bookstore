@@ -42,7 +42,7 @@ try{
 	}
 
 	Statement s1 = connection.createStatement();
-	ResultSet rs1 = s.executeQuery("SELECT * FROM reviews JOIN contributions on contributions.id = reviews.contribution_id WHERE contributions.id = '"+book_id+"'");
+	ResultSet rs1 = s1.executeQuery("SELECT * FROM reviews JOIN contributions on contributions.id = reviews.contribution_id WHERE contributions.id = '"+book_id+"'");
 	
 	out.println("-------------------------<BR>");
 	
@@ -52,8 +52,8 @@ try{
 	}
 	else
 	{
-		out.println("Poster ID: "+rs1.getInt(2)+ "<BR>");
-		out.println("Review: "+rs1.getString(3)+ "<BR>");
+		out.println("Poster ID: "+rs1.getInt(3)+ "<BR>");
+		out.println("Review: "+rs1.getString(4)+ "<BR>");
 	}
 	
 } catch (Exception e)
