@@ -12,11 +12,17 @@ CREATE TABLE users
     email VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     num_contributions int,
+    PRIMARY KEY(id)
+);
+
+CREATE TABLE biography
+(
+    user_id NOT NULL,
     user_displayname VARCHAR(255),
     user_description text,
     user_photourl VARCHAR(255),
-    PRIMARY KEY(id)
-);
+     FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
+)
 
 CREATE TABLE pending_users
 (
@@ -57,18 +63,22 @@ CREATE TABLE pending_contributions
 
 CREATE TABLE pending_reviews
 (
+	id int NOT NULL
 	contribution_id int NOT NULL,
     poster_id int not NULL,
     review_text text,
+    PRIMARY KEY(id);
     FOREIGN KEY(contribution_id) REFERENCES contributions(id) ON DELETE cascade,
     FOREIGN KEY(poster_id) REFERENCES users(id) ON DELETE cascade
 );
 
 CREATE TABLE reviews
 (
+	id int NOT NULL
 	contribution_id int NOT NULL,
     poster_id int not NULL,
     review_text text,
+    PRIMARY KEY(id);
     FOREIGN KEY(contribution_id) REFERENCES contributions(id) ON DELETE cascade,
     FOREIGN KEY(poster_id) REFERENCES users(id) ON DELETE cascade
 );
