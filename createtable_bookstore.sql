@@ -154,6 +154,27 @@ END $$
 
 DELIMITER ;
 
+
+DELIMITER $$
+
+CREATE PROCEDURE edit_bio(
+_id int,
+_photo_url VARCHAR(250),
+_display_name VARCHAR(250),
+_info TEXT
+)
+BEGIN
+	
+    START TRANSACTION;
+    
+    UPDATE biopgrahy SET user_photourl=_photo_url, user_description=_info, user_displayname=_display_name WHERE user_id=_id;
+
+    COMMIT;
+
+END $$
+
+DELIMETER ;
+
 INSERT INTO users (first_name, last_name, email, password, num_contributions) VALUES ('testuser', 'testpass', 'test@test.com', 'testpass', 6);
 INSERT INTO users (first_name, last_name, email, password, num_contributions) VALUES ('Suzanne', 'Collins', 'suzanne@uci.edu', 'collins', 3);
 INSERT INTO users (first_name, last_name, email, password, num_contributions) VALUES ( 'J.K.', 'Rowling', 'jk@uci.edu', 'rowling', 5);
