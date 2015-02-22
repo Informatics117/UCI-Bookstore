@@ -167,7 +167,7 @@ BEGIN
 	
     START TRANSACTION;
     
-    UPDATE biopgrahy SET user_photourl=_photo_url, user_description=_info, user_displayname=_display_name WHERE user_id=_id;
+    UPDATE biography SET user_photourl=_photo_url, user_description=_info, user_displayname=_display_name WHERE user_id=_id;
 
     COMMIT;
 
