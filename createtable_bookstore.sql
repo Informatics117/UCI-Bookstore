@@ -114,10 +114,6 @@ BEGIN
 
 END $$
 
-DELIMITER ;
-
-DELIMITER $$
-
 CREATE PROCEDURE approve_user(
 _user_id INT
 )
@@ -132,10 +128,6 @@ BEGIN
 	COMMIT;
 
 END $$
-
-DELIMITER ;
-
-DELIMITER $$
 
 CREATE PROCEDURE approve_contribution(
 _contribution_id INT
@@ -152,10 +144,6 @@ BEGIN
 
 END $$
 
-DELIMITER ;
-
-
-DELIMITER $$
 
 CREATE PROCEDURE edit_bio(
 _id int,
@@ -173,8 +161,7 @@ BEGIN
 
 END $$
 
-DELIMETER ;
-
+DELIMITER ;
 INSERT INTO users (first_name, last_name, email, password, num_contributions) VALUES ('testuser', 'testpass', 'test@test.com', 'testpass', 6);
 INSERT INTO users (first_name, last_name, email, password, num_contributions) VALUES ('Suzanne', 'Collins', 'suzanne@uci.edu', 'collins', 3);
 INSERT INTO users (first_name, last_name, email, password, num_contributions) VALUES ( 'J.K.', 'Rowling', 'jk@uci.edu', 'rowling', 5);
@@ -283,4 +270,4 @@ INSERT INTO reviews VALUES(DEFAULT, 29, 7, 4,'My first time reading a book from 
 INSERT INTO reviews VALUES(DEFAULT, 29, 5, 2,'boring boring boring...');
 INSERT INTO reviews VALUES(DEFAULT, 29, 6, 3,'THIS BOOK NEEDS TO BE TRANSLATED PROPERLY!! IT\'S SO HARD TO READ!!!');
 
-INSERT INTO adminstrators VALUES(1, 'Steve', 'Carter', 'steve@uci.edu', 'carter', 29, 8);
+INSERT INTO administrators VALUES(1, 'Steve', 'Carter', 'steve@uci.edu', 'carter', 29, 8);
