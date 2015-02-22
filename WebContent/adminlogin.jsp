@@ -47,18 +47,18 @@ try
 	
 	Statement s = connection.createStatement();
 	out.println(email + " " + password);
-	ResultSet rs = s.executeQuery("SELECT * FROM users WHERE email = '"+email+"' AND password = '"+password+"'");
+	ResultSet rs = s.executeQuery("SELECT * FROM administrators WHERE email = '"+email+"' AND password = '"+password+"'");
 	
 	if(rs.next())
 	{
 		if(rs.getString(4).equals(email) && rs.getString(5).equals(password))
 		{
-			Cookie loginCookie = new Cookie("user", email);
+			Cookie loginCookie = new Cookie("admin", email);
+			session.setAttribute("admin", email);
 			loginCookie.setMaxAge(30*60);
-			session.setAttribute("user", email);
 		 	response.addCookie(loginCookie);
-			out.println("Welcome to The Hill. Redirecting.");
-			response.sendRedirect("/Bookstore/search.jsp");
+			out.println("Welcome to The Hill. Redirecting to admin page.");
+			response.sendRedirect("/Bookstore/adminpage.jsp");
 		}
 	}
 	else

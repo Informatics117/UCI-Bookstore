@@ -12,5 +12,5 @@
  	String message = request.getParameter("message");
  	out.println(message+"<BR>");
  	//url to be changed to /index.jsp when splash page is finished.
-	response.setHeader("Refresh", "30;url=/Bookstore/login.jsp");
+	response.setHeader("Refresh", "5;url=/Bookstore/login.jsp");
  %>

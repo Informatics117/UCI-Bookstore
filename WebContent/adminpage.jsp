@@ -11,8 +11,26 @@
  <%-- Java code to collect variables. --%>
 <%
 try{
+	
+	if(session.getAttribute("admin") == null){
+		response.sendRedirect("/Bookstore/redirect.jsp?message=You are not an admin!");
+	}
+	String userName = null;
+	String sessionID = null;
+	Cookie[] cookies = request.getCookies();
+	if(cookies !=null){
+	for(Cookie cookie : cookies){
+	    if(cookie.getName().equals("admin")) userName = cookie.getValue();
+	}
+	
+	out.println("Welcome, "+userName);
+	out.println("<form method='POST' action='logout.jsp'><input type='hidden' value='true' name='logout'><button type='submit' class='btn btn-default'>Logout</button></form>");
+	
+	}
+	
 	Class.forName("com.mysql.jdbc.Driver").newInstance();
 	Connection connection = DriverManager.getConnection("jdbc:mysql:///" + "bookstoredb","testuser","testpass");
+
 	
 	String review_id = request.getParameter("review_id");
 	String contribution_id = request.getParameter("contribution_id");
