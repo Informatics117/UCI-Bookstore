@@ -56,6 +56,7 @@ try
 			Cookie loginCookie = new Cookie("user", email);
 			loginCookie.setMaxAge(30*60);
 			session.setAttribute("user", email);
+			session.setAttribute("id", rs.getInt(1));
 		 	response.addCookie(loginCookie);
 			out.println("Welcome to The Hill. Redirecting.");
 			response.sendRedirect("/Bookstore/search.jsp");

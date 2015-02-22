@@ -6,22 +6,21 @@
  javax.servlet.http.*,
  javax.servlet.*"%>
 
-<!DOCTYPE html>
-<html>
-<body>
-	<%
+<%
 try{
 	
-	int author_id = 0;
-	try{
-		author_id = Integer.parseInt(request.getParameter("author_id"));
+	int id = 0;
+	try
+	{
+		id = Integer.parseInt(session.getAttribute("id").toString());
 	} catch (Exception e)
 	{
-		out.println("Invalid Author ID");
+		out.println("You are not logged in<BR>");
+		response.sendRedirect("/Bookstore/redirect.jsp?message=You do not have access to this page!");
 	}
 	
-	if(session.getAttribute("user") == null && session.getAttribute("admin") == null){
-		out.println("You are not logged in<BR>");
+	if((session.getAttribute("user") == null && session.getAttribute("admin") == null) || id != Integer.parseInt(request.getParameter("author_id")) ){
+		response.sendRedirect("/Bookstore/redirect.jsp?message=You do not have access to this page!");
 	}
 	else
 	{
@@ -39,22 +38,44 @@ try{
 	}
 	else
 	{
-	int id = Integer.parseInt(session.getAttribute("id").toString());
-	out.println("You are logged in as "+userName);
+	out.println("You are logged in as "+userName+"<BR>");
+	out.println("<a href = '/Bookstore/author.jsp?author_id="+id+"'>Return to Profile</a>");
 	out.println("<form method='POST' action='logout.jsp'><input type='hidden' value='true' name='logout'><button type='submit' class='btn btn-default'>Logout</button></form>");
-	if(Integer.parseInt(session.getAttribute("id").toString()) == author_id)
-	{
-	out.println("<form method='POST' action='editprofile.jsp'><input type='hidden' value='"+id+"' name='author_id'><button type='submit' class='btn btn-default'>Edit this Page</button></form>");
-	}
 	}
 	}
 	}
 %>
 
-	<%-- JAVA CODE TO DISPLAY AUTHOR PAGE. --%>
-	<%
+<%
 	Class.forName("com.mysql.jdbc.Driver").newInstance();
 	Connection connection = DriverManager.getConnection("jdbc:mysql:///" + "bookstoredb","testuser","testpass");
+	
+	String edit = request.getParameter("edit");
+
+	if(edit!=null)
+	{
+	String query;
+	Statement edits = connection.createStatement();
+	
+	String photo_url = request.getParameter("photo_url");
+	String display_name = request.getParameter("display_name");
+	String info = request.getParameter("info");
+	
+	if(edit.length() > 0)
+	{
+		query = "CALL edit_bio('"+id+"','"+photo_url+"','"+display_name+"','"+info+"')";
+		edits.executeUpdate(query);
+		out.println("Changes have been made.");
+	}
+	}
+	
+	int author_id = 0;
+	try{
+		author_id = Integer.parseInt(request.getParameter("author_id"));
+	} catch (Exception e)
+	{
+		out.println("Invalid Author ID");
+	}
 	
 	String getAuthor = "SELECT * FROM biography WHERE user_id = '"+author_id+"'";
 	Statement s = connection.createStatement();
@@ -75,10 +96,28 @@ try{
 		}
 		else
 		{
-			out.println("photoURL: " + bioInfo.getString(4) + "<BR>");
-			out.println("Author Name: " + bioInfo.getString(2) + "<BR>");
-			out.println("Biography: " + bioInfo.getString(3) + "<BR>");
+			out.println("<form method='POST'>");
+			//photo url
+			out.println("<div class='form-group'>");
+			out.println("<label for='last'>Photo URL*: </label>");
+			out.println("<input type='text' class='form-control' name='photo_url' id='photo_url' value = '"+bioInfo.getString(4)+"'>");
+			out.println("</div>");
+		
+			//name
+			out.println("<div class='form-group'>");
+			out.println("<label for='last'>Display Name*: </label>");
+			out.println("<input type='text' class='form-control' name='display_name' id='display_name' value = '"+bioInfo.getString(2)+"' >");
+			out.println("</div>");
 			
+			out.println("<input type='hidden' name='author_id' value='"+author_id+"'>");
+			
+			//biography
+			out.println("<div class='form-group'>");
+			out.println("<label for='inf'>More Info*: </label>");
+			out.println("<textarea name='info' class='form-control' cols='50' rows='5' id='info' placeholder='No text'>"+bioInfo.getString(3)+"</textarea>");
+			out.println("</div>");
+			out.println("<button type='submit' value = 'true' name = 'edit' class='btn btn-default'>Make Changes</button>");
+			out.println("</form>");
 		}
 	}
 	
@@ -117,6 +156,3 @@ try{
 	 System.out.println(e);
 }
 %>
-
-</body>
-</html>

@@ -15,7 +15,8 @@
 
 		session.removeAttribute("admin");
 		session.removeAttribute("user");
-
+		session.removeAttribute("id");
+		
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null)
 			for (int i = 0; i < cookies.length; i++) {
