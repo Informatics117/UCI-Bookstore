@@ -1,3 +1,7 @@
+<jsp:include page="header.jsp" flush="true">
+    <jsp:param name="pageName" value="Admin"/>
+</jsp:include>
+
 <%-- to do: check if user is an admin, otherwise redirect them to main page. --%>
 
 <%-- REQUIRED JAVA IMPORTS --%>
@@ -9,6 +13,8 @@
  javax.servlet.*"%>
  
  <%-- Java code to collect variables. --%>
+<body>
+	<div class="container">
 <%
 try{
 	
@@ -25,7 +31,8 @@ try{
 	
 	out.println("Welcome, "+userName);
 	out.println("<form method='POST' action='logout.jsp'><input type='hidden' value='true' name='logout'><button type='submit' class='btn btn-default'>Logout</button></form>");
-	
+	out.println("<hr>");
+	out.println("<div class='col-sm-12'>");
 	}
 	
 	Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -39,6 +46,7 @@ try{
 	String query;
 	Statement approval = connection.createStatement();
 	
+	out.println("<div class='row'>");
 	if(review_id != null && review_id.length() > 0)
 	{
 		query = "CALL approve_review("+review_id+")";
@@ -57,73 +65,94 @@ try{
 		approval.executeUpdate(query);
 		out.print("User has been approved. <BR>");
 	}
+	out.println("</div>");
 //-- Java code to display unapproved things. Divded with dividers. --
 	
 	Statement s = connection.createStatement();
 	ResultSet rs = s.executeQuery("SELECT * FROM pending_reviews");
-	out.println("-------------------------<BR>");
-	out.println("PENDING REVIEWS<BR><BR>");
+	out.println("<div class='row'>");
+	out.println("<div class='col-sm-4 scrollable'>");
+	out.println("<p>Pending Reviews</p>");
 	if(rs == null || !rs.first())
 	{
-		out.println("No pending reviews<BR>");
+		out.println("<div class='row'>");
+		out.println("<p>No pending reviews</p>");
+		out.println("</div>");
 	}
 	else
 	{
 		do
 		{
-		out.println("Poster ID: "+rs.getInt(3)+ "<BR>");
-		out.println("Review: "+rs.getString(4)+ "<BR>");
+		out.println("<div class='row admin-row'>");
+		out.println("<p class='admin-p'>Poster ID: "+rs.getInt(3)+ "</p>");
+		out.println("<p class='admin-p'>Review: "+rs.getString(4)+ "</p>");
 		out.println("<form method='POST' action='adminpage.jsp'><input type='hidden' value='" + rs.getInt(1) + "' name='review_id'><button type='submit' class='btn btn-default'>Approve Post</button></form>");
+		out.println("</div>");
 		} while(rs.next());
 	}
-	
+	out.println("</div>");
 	//<--Divider-->
-	out.println("-------------------------<BR>");
-	out.println("PENDING CONTRIBUTIONS<BR><BR>");
+	out.println("<div class='row'>");
+	out.println("<div class='col-sm-4 scrollable'>");
+	out.println("<p>Pending Contributions</p>");
 	
 	Statement s1 = connection.createStatement();
 	ResultSet rs1 = s1.executeQuery("SELECT * FROM pending_contributions");
 	if(rs1 == null || !rs1.first())
 	{
-		out.println("No pending contributions<BR>");
+		out.println("<div class='row'>");
+		out.println("<p>No pending contributions</p>");
+		out.println("</div>");
 	}
 	else
 	{
 		do
 		{
-		out.println("Author ID: "+rs1.getInt(2)+ "<BR>");
-		out.println("Contribution name: "+rs1.getString(3)+ "<BR>");
-		out.println("ISBN number: "+rs1.getInt(4)+ "<BR>");
-		out.println("Price: "+rs1.getDouble(5)+ "<BR>");
-		out.println("Description: "+rs1.getString(6)+ "<BR>");
+		out.println("<div class='row admin-row'>");
+		out.println("<p class='admin-p'>Author ID: "+rs1.getInt(2)+ "</p>");
+		out.println("<p class='admin-p'>Contribution name: "+rs1.getString(3)+ "</p>");
+		out.println("<p class='admin-p'>ISBN number: "+rs1.getInt(4)+ "</p>");
+		out.println("<p class='admin-p'>Price: "+rs1.getDouble(5)+ "</p>");
+		out.println("<p class='admin-p'>Description: "+rs1.getString(6)+ "</p>");
 		out.println("<form method='POST' action='adminpage.jsp'><input type='hidden' value='" + rs1.getInt(1) + "' name='contribution_id'><button type='submit' class='btn btn-default'>Approve Contribution</button></form>");
+		out.println("</div>");
 		} while(rs1.next());
 		
 	}
-	
+	out.println("</div>");
 	//<--Divider-->
-	out.println("-------------------------<BR>");
-	out.println("PENDING USERS<BR><BR>");
+	out.println("<div class='row'>");
+	out.println("<div class='col-sm-4 scrollable'>");
+	out.println("<p>Pending Users</p>");
 
 	Statement s2 = connection.createStatement();
 	ResultSet rs2 = s2.executeQuery("SELECT * FROM pending_users");
 	if(rs2 == null || !rs2.first())
 	{
-		out.println("No pending users<BR>");
+		out.println("<div class='row'>");
+		out.println("No pending users");
+		out.println("</div>");
 	}
 	else
 	{
 		do
 		{
-		out.println("First Name: "+rs2.getString(2)+ "<BR>");
-		out.println("Last Name: "+rs2.getString(3)+ "<BR>");
-		out.println("Info: "+rs2.getString(6)+ "<BR>");
+		out.println("<div class='row'>");
+		out.println("<p class='admin-p'>First Name: "+rs2.getString(2)+ "</p>");
+		out.println("<p class='admin-p'>Last Name: "+rs2.getString(3)+ "</p>");
+		out.println("<p class='admin-p'>Info: "+rs2.getString(6)+ "</p>");
 		out.println("<form method='POST' action='adminpage.jsp'><input type='hidden' value='" + rs2.getInt(1) + "' name='user_id'><button type='submit' class='btn btn-default'>Approve User</button></form>");
+		out.println("</div>");
 		} while(rs2.next());
 	}
+	out.println("</div>");
+	out.println("</div>");
 	
 } catch (Exception e)
 {
 	 System.out.println(e);
 }
 %>
+		</div>
+	</div>
+</body>

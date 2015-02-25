@@ -9,4 +9,6 @@
     <head>
         <title><%= pageName %> - Bookstore</title>
         <link href="css/bootstrap.css" rel="stylesheet">
+        <link href="css/bookstore.css" rel="stylesheet">
+
     </head>

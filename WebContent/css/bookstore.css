@@ -1,0 +1,11 @@
+.scrollable {
+	height: 500px;
+	overflow: auto;
+}
+.admin-row {
+	margin-bottom: 10px;
+}
+
+.admin-p {
+	margin-bottom: 0px;
+}
