@@ -49,7 +49,22 @@ try
 	out.println(email + " " + password);
 	ResultSet rs = s.executeQuery("SELECT * FROM users WHERE email = '"+email+"' AND password = '"+password+"'");
 	
-	if(rs.next())
+	Statement s1 = connection.createStatement();
+	ResultSet rs1 = s1.executeQuery("SELECT * FROM administrators WHERE email = '"+email+"' AND password = '"+password+"'");
+	
+	if(rs1.next())
+	{
+		if(rs1.getString(4).equals(email) && rs1.getString(5).equals(password))
+		{
+			Cookie loginCookie = new Cookie("admin", email);
+			session.setAttribute("admin", email);
+			loginCookie.setMaxAge(30*60);
+		 	response.addCookie(loginCookie);
+			out.println("Welcome to The Hill. Redirecting to admin page.");
+			response.sendRedirect("/Bookstore/adminpage.jsp");
+		}
+	}
+	else if(rs.next())
 	{
 		if(rs.getString(4).equals(email) && rs.getString(5).equals(password))
 		{
