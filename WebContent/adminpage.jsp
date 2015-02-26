@@ -28,11 +28,11 @@ try{
 	for(Cookie cookie : cookies){
 	    if(cookie.getName().equals("admin")) userName = cookie.getValue();
 	}
-	
+	out.println("<div class='row'>");
+	out.println("<div class='col-sm-4'>");
 	out.println("Welcome, "+userName);
 	out.println("<form method='POST' action='logout.jsp'><input type='hidden' value='true' name='logout'><button type='submit' class='btn btn-default'>Logout</button></form>");
-	out.println("<hr>");
-	out.println("<div class='col-sm-12'>");
+	out.println("</div>");
 	}
 	
 	Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -46,26 +46,29 @@ try{
 	String query;
 	Statement approval = connection.createStatement();
 	
-	out.println("<div class='row'>");
+	out.println("<div class='col-sm-4'>");
 	if(review_id != null && review_id.length() > 0)
 	{
 		query = "CALL approve_review("+review_id+")";
 		approval.executeUpdate(query);
-		out.print("Review has been approved. <BR>");
+		out.print("<p>Review has been approved.</p>");
 	}
 	else if(contribution_id != null && contribution_id.length() > 0)
 	{
 		query = "CALL approve_contribution("+contribution_id+")";
 		approval.executeUpdate(query);
-		out.print("Contribution has been approved. <BR>");
+		out.print("<p>Contribution has been approved.</p>");
 	}
 	else if(user_id != null && user_id.length() > 0)
 	{
 		query = "CALL approve_user("+user_id+")";
 		approval.executeUpdate(query);
-		out.print("User has been approved. <BR>");
+		out.print("<p>User has been approved.</p>");
 	}
 	out.println("</div>");
+	out.println("</div>");
+	out.println("<hr>");
+	out.println("<div class='col-sm-12'>");
 //-- Java code to display unapproved things. Divded with dividers. --
 	
 	Statement s = connection.createStatement();

@@ -9,3 +9,15 @@
 .admin-p {
 	margin-bottom: 0px;
 }
+
+.admin-logout {
+	margin-top: 5px;
+}
+.bio-scrollable {
+	height: 400px;
+	overflow: auto;
+}
+
+.author-header {
+	margin-top: 10px;
+}
