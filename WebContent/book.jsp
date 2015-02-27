@@ -1,3 +1,6 @@
+<jsp:include page="header.jsp" flush="true">
+    <jsp:param name="pageName" value="Book"/>
+</jsp:include>
 <%-- REQUIRED JAVA IMPORTS --%>
 <%@page
 	import="java.sql.*,
@@ -9,10 +12,12 @@
 <!DOCTYPE html>
 <html>
 <body>
-
+	<div class="container">
 <%
+	out.println("<div class='row'>");
+	out.println("<div class='col-sm-4'>");
 	if(session.getAttribute("user") == null && session.getAttribute("admin") == null){
-		out.println("You are not logged in<BR>");
+		out.println("<h4>You are not logged in</h4>");
 	}
 	else
 	{
@@ -26,15 +31,18 @@
 	
 	if(userName == null)
 	{
-		out.println("You are not logged in<BR>");
+		out.println("<h4>You are not logged in</h4>");
 	}
 	else
 	{
-	out.println("You are logged in as "+userName);
+	out.println("<h4>You are logged in as "+userName+"</h4>");
 	out.println("<form method='POST' action='logout.jsp'><input type='hidden' value='true' name='logout'><button type='submit' class='btn btn-default'>Logout</button></form>");
 	}
 	}
 	}
+	out.println("</div>");
+	out.println("</div>");
+	out.println("<hr>");
 %>
 
 <%-- JAVA CODE TO DISPLAY AUTHOR PAGE. --%>
@@ -48,7 +56,7 @@ try{
 		book_id = Integer.parseInt(request.getParameter("book_id"));
 	} catch (Exception e)
 	{
-		out.println("Invalid Author ID");
+		out.println("<h2>Invalid Author ID</h2>");
 	}
 	
 	String getBook = "SELECT * FROM contributions JOIN users on users.id = contributions.user_id where contributions.id = '"+book_id+"'";
@@ -57,21 +65,31 @@ try{
 	
 	if(rs == null || !rs.first())
 	{
-		out.println("Book could not be found.");
+		out.println("<h2>Book could not be found.</h2>");
 	}
 	else
 	{
-		out.println("Book Title: "+rs.getString(3)+ "<BR>");
-		out.println("Author: "+"<a href = '/Bookstore/author.jsp?author_id="+rs.getInt(2)+"'>"+ rs.getString(9) + rs.getString(10) + "</a><BR>");
-		out.println("ISBN number: "+rs.getInt(4)+ "<BR>");
-		out.println("Price: "+rs.getDouble(6)+ "<BR>");
-		out.println("Description: "+rs.getString(7)+ "<BR>");
+		out.println("<div class='row'>");
+		out.println("<div class='col-sm-6'>");
+		out.println("<p>Book image here</p>");
+		out.println("</div>");
+		out.println("<div class='col-sm-6'>");
+		out.println("<h2>"+rs.getString(3)+ "</h2>");
+		out.println("<h4>by "+"<a href = '/Bookstore/author.jsp?author_id="+rs.getInt(2)+"'>"+ rs.getString(9) + rs.getString(10) + "</a></h4>");
+		out.println("<h5>ISBN number: "+rs.getInt(4)+ "</h5>");
+		out.println("<h5>Price: "+rs.getDouble(6)+ "</h5>");
+		out.println("</div>");
+		out.println("</div>");
+		out.println("<hr>");
+		out.println("<div class='row'>");
+		out.println("<h5>Summary: "+rs.getString(7)+ "</h5>");
+		out.println("</div>");
 	}
 
 	Statement s1 = connection.createStatement();
 	ResultSet rs1 = s1.executeQuery("SELECT * FROM reviews JOIN contributions on contributions.id = reviews.contribution_id WHERE contributions.id = '"+book_id+"'");
 	
-	out.println("-------------------------<BR>");
+	out.println("<hr>");
 	
 	if(rs1 == null || !rs1.first())
 	{
@@ -79,8 +97,15 @@ try{
 	}
 	else
 	{
-		out.println("Poster ID: "+rs1.getInt(3)+ "<BR>");
-		out.println("Review: "+rs1.getString(4)+ "<BR>");
+		//Shouldn't there be a while loop around here cause there can be multiple posts
+		out.println("<div class='row'>");
+		out.println("<div class='col-sm-3'>");
+		out.println("<p>Poster ID: "+rs1.getInt(3)+ "</p>");
+		out.println("</div>");
+		out.println("<div class='col-sm-3'>");
+		out.println("<p>Review: "+rs1.getString(4)+ "</p>");
+		out.println("</div>");
+		out.println("</div>");
 	}
 	
 } catch (Exception e)
@@ -88,6 +113,6 @@ try{
 	 System.out.println(e);
 }
 %>
-
+	</div>
 </body>
 </html>
