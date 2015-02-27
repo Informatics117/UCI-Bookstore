@@ -1,3 +1,6 @@
+<jsp:include page="header.jsp" flush="true">
+    <jsp:param name="pageName" value="Edit Profile"/>
+</jsp:include>
 <%-- REQUIRED JAVA IMPORTS --%>
 <%@page
 	import="java.sql.*,
@@ -6,16 +9,20 @@
  javax.servlet.http.*,
  javax.servlet.*"%>
 
+<body>
+	<div class="container">
 <%
 try{
 	
 	int id = 0;
+	out.println("<div class='row'>");
+	out.println("<div class='col-sm-4'>");
 	try
 	{
 		id = Integer.parseInt(session.getAttribute("id").toString());
 	} catch (Exception e)
 	{
-		out.println("You are not logged in<BR>");
+		out.println("<label>You are not logged in</label>");
 		response.sendRedirect("/Bookstore/redirect.jsp?message=You do not have access to this page!");
 	}
 	
@@ -34,16 +41,23 @@ try{
 	
 	if(userName == null)
 	{
-		out.println("You are not logged in<BR>");
+		out.println("<label>You are not logged in</label>");
 	}
 	else
 	{
-	out.println("You are logged in as "+userName+"<BR>");
-	out.println("<a href = '/Bookstore/author.jsp?author_id="+id+"'>Return to Profile</a>");
+	out.println("<label>You are logged in as "+userName+"</label>");
+	out.println("<label><a href = '/Bookstore/author.jsp?author_id="+id+"'>Return to Profile</a><label>");
+	out.println("</div>");
+	out.println("</div>");
+	out.println("<div class='row'>");
+	out.println("<div class='col-sm-4'>");
 	out.println("<form method='POST' action='logout.jsp'><input type='hidden' value='true' name='logout'><button type='submit' class='btn btn-default'>Logout</button></form>");
+	out.println("</div>");
+	out.println("</div>");
 	}
 	}
 	}
+	out.println("<hr>");
 %>
 
 <%
@@ -65,7 +79,7 @@ try{
 	{
 		query = "CALL edit_bio('"+id+"','"+photo_url+"','"+display_name+"','"+info+"')";
 		edits.executeUpdate(query);
-		out.println("Changes have been made.");
+		out.println("<h4>Changes have been made.</h4>");
 	}
 	}
 	
@@ -74,7 +88,7 @@ try{
 		author_id = Integer.parseInt(request.getParameter("author_id"));
 	} catch (Exception e)
 	{
-		out.println("Invalid Author ID");
+		out.println("<h2>Invalid Author ID</h2>");
 	}
 	
 	String getAuthor = "SELECT * FROM biography WHERE user_id = '"+author_id+"'";
@@ -86,16 +100,17 @@ try{
 	
 	if (rs == null || !rs.first())
 	{
-		out.println("Author could not be found. <BR>");
+		out.println("<h2>Author could not be found. </h2>");
 	}
 	else
 	{
 		if(bioInfo == null || !bioInfo.first())
 		{
-			out.println("Author does not have a bio yet.");
+			out.println("<h2>Author does not have a bio yet.</h2>");
 		}
 		else
 		{
+			out.println("<div class='row edit-row'>");
 			out.println("<form method='POST'>");
 			//photo url
 			out.println("<div class='form-group'>");
@@ -118,8 +133,10 @@ try{
 			out.println("</div>");
 			out.println("<button type='submit' value = 'true' name = 'edit' class='btn btn-default'>Make Changes</button>");
 			out.println("</form>");
+			out.println("</div>");
 		}
 	}
+	out.println("<hr>");
 	
 	String getWorks = "SELECT * FROM contributions JOIN users ON users.id = contributions.user_id WHERE users.id = '"+author_id+"'";
 	Statement s1 = connection.createStatement();
@@ -131,20 +148,38 @@ try{
 	}
 	else
 	{
-		
-	out.println("<table><tr>");
-	out.println("<tr><td>BOOK ID</td><td>BOOK Title</td><td>ISBN Number</td><td>Rating</td><td>Price</td><td>Description</td></tr>");
+	out.println("<div class='row'>");
+	out.println("</div>");
+	out.println("<div class='row'>");
+	out.println("<div class='col-sm-3'>");
+	out.println("<h3 class='author-header'>Title</h3>");
+	out.println("</div>");
+	out.println("<div class='col-sm-3'>");
+	out.println("<h3 class='author-header'>ISBN</h3>");
+	out.println("</div>");
+	out.println("<div class='col-sm-3'>");
+	out.println("<h3 class='author-header'>Rating</h3>");
+	out.println("</div>");
+	out.println("<div class='col-sm-3'>");
+	out.println("<h3 class='author-header'>Price</h3>");
+	out.println("</div>");
+	out.println("</div>");
 	do
 	{
-		out.println("</tr>");
-		out.println("<td>"+ rs1.getInt(1) + "</td>");
-		out.println("<td><a href = '/Bookstore/book.jsp?book_id="+rs1.getInt(1)+"'>"+ rs1.getString(3) + "</a></td>");
-		out.println("<td>"+ rs1.getString(4) + "</td>");
-		out.println("<td>"+ rs1.getInt(5) + "</td>");
-		out.println("<td>"+ rs1.getDouble(6) + "</td>");
-		out.println("<td>"+ rs1.getString(7)+ "</td>");
-		out.println("</tr>");
-		
+		out.println("<div class='row'>");
+		out.println("<div class='col-sm-3'>");
+		out.println("<a href = '/Bookstore/book.jsp?book_id="+rs1.getInt(1)+"'>"+ rs1.getString(3) + "</a></td>");
+		out.println("</div>");
+		out.println("<div class='col-sm-3'>");
+		out.println("<p>"+ rs1.getString(4) + "</p>");
+		out.println("</div>");
+		out.println("<div class='col-sm-3'>");
+		out.println("<p>"+ rs1.getInt(5) + "</p>");
+		out.println("</div>");
+		out.println("<div class='col-sm-3'>");
+		out.println("<p>"+ rs1.getDouble(6) + "</p>");
+		out.println("</div>");
+		out.println("</div>");
 		//http://localhost:8080/Bookstore/author.jsp?author_id=1
 	} while(rs1.next());
 	
@@ -156,3 +191,5 @@ try{
 	 System.out.println(e);
 }
 %>
+	</div>
+</body>
