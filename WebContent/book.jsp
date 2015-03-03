@@ -103,7 +103,7 @@ try{
 		out.println("<p>Poster ID: "+rs1.getInt(3)+ "</p>");
 		out.println("</div>");
 		out.println("<div class='col-sm-3'>");
-		out.println("<p>Review: "+rs1.getString(4)+ "</p>");
+		out.println("<p>Review: "+rs1.getString(5)+ "</p>");
 		out.println("</div>");
 		out.println("</div>");
 	}
