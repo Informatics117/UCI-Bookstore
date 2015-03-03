@@ -95,13 +95,13 @@ try{
 		out.println("<div class='col-sm-4'>");
 		out.println("<img src='https://images-na.ssl-images-amazon.com/images/I/51XMDomIriL._UY250_.jpg' width='50%' height='200px'/>");
 		out.println("</div>");
-		int author_id = rs1.getInt(8);
+		int author_id = rs1.getInt(9);
 
 		out.println("<div class='col-sm-8'>");
 		//First Row
 		out.println("<div class='row'>");
 		out.println("<div class='col-sm-4'>");
-		out.println("<p>"+ rs1.getString(3) + "</p>");
+		out.println("<p><a href = '/Bookstore/book.jsp?book_id="+rs1.getInt(1)+"'>"+ rs1.getString(3) + "</a></p>");
 		out.println("</div>");
 		out.println("<div class='col-sm-4'>");
 		out.println("<img src='http://www.puz.ca/images/stars-"+rs1.getInt(5)+".gif'/>");
