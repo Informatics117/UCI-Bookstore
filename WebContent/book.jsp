@@ -97,6 +97,7 @@ try{
 	}
 	else
 	{
+		do{
 		//Shouldn't there be a while loop around here cause there can be multiple posts
 		out.println("<div class='row'>");
 		out.println("<div class='col-sm-3'>");
@@ -106,6 +107,7 @@ try{
 		out.println("<p>Review: "+rs1.getString(5)+ "</p>");
 		out.println("</div>");
 		out.println("</div>");
+		} while (rs.next());
 	}
 	
 } catch (Exception e)
