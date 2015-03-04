@@ -183,7 +183,7 @@ INSERT INTO biography VALUES(6, 'Jane Austen', 'An English novelist whose works 
 INSERT INTO biography VALUES(7, 'Margaret Mitchell', 'An American author and journalist. Known for writing the popular novel Gone with the Wind.', 'http://blogs.bookforum.com/wp-content/uploads/2013/12/Margaret-Mitchell.jpg');
 INSERT INTO biography VALUES(8, 'Jane Lee', 'Author of Gypsy Jane my life story.', 'http://d.gr-assets.com/books/1344737208l/14925831.jpg');
 
-INSERT INTO pending_users VALUES (DEFAULT, 'Jacob', 'Michaelson', 'jacob@uci.edu', 'michaelson', 0);
+INSERT INTO pending_users VALUES (DEFAULT, 'Jacob', 'Michaelson', 'jacob@uci.edu', 'michaelson', 'The name is Michaelson. Jacob Michaelson.');
 
 INSERT INTO contributions (user_id, contribution_name, isbn_num, book_rating, book_price, description, ts) VALUES ('1', 'Book1', '0001', 0, 5.99, 'test book1', now());
 INSERT INTO contributions (user_id, contribution_name, isbn_num, book_rating, book_price, description, ts) VALUES ('1', 'Book2', '0002', 0, 6.99, 'test book2', now());

@@ -115,8 +115,9 @@ try{
 		out.println("<p class='admin-p'>Author ID: "+rs1.getInt(2)+ "</p>");
 		out.println("<p class='admin-p'>Contribution name: "+rs1.getString(3)+ "</p>");
 		out.println("<p class='admin-p'>ISBN number: "+rs1.getInt(4)+ "</p>");
-		out.println("<p class='admin-p'>Price: "+rs1.getDouble(5)+ "</p>");
-		out.println("<p class='admin-p'>Description: "+rs1.getString(6)+ "</p>");
+		out.println("<p class='admin-p'>Rating: "+rs1.getInt(5)+ "</p>");
+		out.println("<p class='admin-p'>Price: $"+rs1.getDouble(6)+ "</p>");
+		out.println("<p class='admin-p'>Description: "+rs1.getString(7)+ "</p>");
 		out.println("<form method='POST' action='adminpage.jsp'><input type='hidden' value='" + rs1.getInt(1) + "' name='contribution_id'><button type='submit' class='btn btn-default'>Approve Contribution</button></form>");
 		out.println("</div>");
 		} while(rs1.next());
@@ -143,6 +144,7 @@ try{
 		out.println("<div class='row'>");
 		out.println("<p class='admin-p'>First Name: "+rs2.getString(2)+ "</p>");
 		out.println("<p class='admin-p'>Last Name: "+rs2.getString(3)+ "</p>");
+		out.println("<p class='admin-p'>Email: "+rs2.getString(4)+ "</p>");
 		out.println("<p class='admin-p'>Info: "+rs2.getString(6)+ "</p>");
 		out.println("<form method='POST' action='adminpage.jsp'><input type='hidden' value='" + rs2.getInt(1) + "' name='user_id'><button type='submit' class='btn btn-default'>Approve User</button></form>");
 		out.println("</div>");
