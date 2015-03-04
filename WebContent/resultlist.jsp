@@ -93,7 +93,7 @@ try{
 		out.println("<div class='row'>");
 
 		out.println("<div class='col-sm-4'>");
-		out.println("<img src='https://images-na.ssl-images-amazon.com/images/I/51XMDomIriL._UY250_.jpg' width='50%' height='200px'/>");
+		out.println("<img src='http://www.michaelsharp.org/files/PlaceholderBook.png'/>");
 		out.println("</div>");
 		int author_id = rs1.getInt(9);
 

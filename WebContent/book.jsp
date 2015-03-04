@@ -35,7 +35,7 @@
 	}
 	else
 	{
-	out.println("<h4>You are logged in as "+userName+"</h4>");
+	out.println("<h5>You are logged in as "+userName+"</h5>");
 	out.println("<form method='POST' action='logout.jsp'><input type='hidden' value='true' name='logout'><button type='submit' class='btn btn-default'>Logout</button></form>");
 	}
 	}
@@ -71,7 +71,7 @@ try{
 	{
 		out.println("<div class='row'>");
 		out.println("<div class='col-sm-6'>");
-		out.println("<p>Book image here</p>");
+		out.println("<img src='http://www.michaelsharp.org/files/PlaceholderBook.png'/>");
 		out.println("</div>");
 		out.println("<div class='col-sm-6'>");
 		out.println("<h2>"+rs.getString(3)+ "</h2>");
