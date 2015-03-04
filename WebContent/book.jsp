@@ -75,15 +75,16 @@ try{
 		out.println("</div>");
 		out.println("<div class='col-sm-6'>");
 		out.println("<h2>"+rs.getString(3)+ "</h2>");
-		out.println("<h4>by "+"<a href = '/Bookstore/author.jsp?author_id="+rs.getInt(2)+"'>"+ rs.getString(9) + rs.getString(10) + "</a></h4>");
+		out.println("<h4>by "+"<a href = '/Bookstore/author.jsp?author_id="+rs.getInt(2)+"'> "+ rs.getString(9) + rs.getString(10) + "</a></h4>");
 		out.println("<h5>ISBN number: "+rs.getInt(4)+ "</h5>");
 		out.println("<h5>Price: "+rs.getDouble(6)+ "</h5>");
 		out.println("</div>");
 		out.println("</div>");
 		out.println("<hr>");
-		out.println("<div class='row'>");
-		out.println("<h5>Summary: "+rs.getString(7)+ "</h5>");
-		out.println("</div>");
+		out.println("<h5><b>Summary: </b></h5>");
+//		out.println("<div class='row'>");
+		out.println(rs.getString(7));
+//		out.println("</div>");
 	}
 
 	Statement s1 = connection.createStatement();
@@ -97,17 +98,19 @@ try{
 	}
 	else
 	{
-		do{
-		//Shouldn't there be a while loop around here cause there can be multiple posts
-		out.println("<div class='row'>");
-		out.println("<div class='col-sm-3'>");
-		out.println("<p>Poster ID: "+rs1.getInt(3)+ "</p>");
-		out.println("</div>");
-		out.println("<div class='col-sm-3'>");
-		out.println("<p>Review: "+rs1.getString(5)+ "</p>");
-		out.println("</div>");
-		out.println("</div>");
-		} while (rs.next());
+		out.println("<b> Reviews: </b>");
+		do
+		{
+			out.println("<div class='row'>");
+			out.println("<div class='col-sm-3'>");
+			out.println("<p>Poster ID: "+rs1.getInt(3)+ "</p>");
+			out.println("</div>");
+			out.println("<div class='col-sm-9'>");
+			out.println("<p>" + rs1.getString(5)+ "</p>");
+			out.println("</div>");
+			out.println("</div>");
+		}
+		while(rs1.next());
 	}
 	
 } catch (Exception e)
