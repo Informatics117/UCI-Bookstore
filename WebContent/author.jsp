@@ -102,6 +102,35 @@ try{
 			out.println("<div class='row'>");
 			out.println("<div class='col-sm-4'>");
 			out.println("<img src='"+bioInfo.getString(4)+"' width='75%'/>");
+			%>
+			
+		  <div class="btn-group" role="group" style="width:100%">
+		  <a class="twitter-share-button, btn btn-default" href="https://twitter.com/share" type="button" style="width:50%"> Tweet</a>
+		  <script>
+			window.twttr=(function(d,s,id){
+					var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};
+					if(d.getElementById(id))return;
+					js=d.createElement(s);
+					js.id=id;
+					js.src="https://platform.twitter.com/widgets.js";
+					fjs.parentNode.insertBefore(js,fjs);
+					t._e=[];
+					t.ready=function(f){
+							t._e.push(f);
+						};
+					return t;
+					}(document,"script","twitter-wjs"));
+		  </script>
+		  
+		 <a class="btn btn-default" href="javascript:fbshareCurrentPage()" target="_blank" alt="Share on Facebook" type="button" style="width:50%">Share</a>
+
+		<script language="javascript">
+		function fbshareCurrentPage()
+		{window.open("https://www.facebook.com/sharer/sharer.php?u="+escape(window.location.href)+"&t="+document.title, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false; }
+		</script>
+		</div>
+		
+		<%
 			out.println("</div>");
 			//Biography
 			out.println("<div class='col-sm-8 bio-scrollable'>");
