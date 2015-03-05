@@ -12,6 +12,10 @@ CREATE TABLE users
     email VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     num_contributions int,
+    affiliation VARCHAR(255) NOT NULL,
+    department VARCHAR(255),
+    class int NOT NULL,
+    school VARCHAR(255) NOT NULL,
     PRIMARY KEY(id)
 );
 
@@ -21,7 +25,7 @@ CREATE TABLE biography
     user_displayname VARCHAR(255),
     user_description text,
     user_photourl VARCHAR(255),
-     FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
+	FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE pending_users
@@ -32,6 +36,10 @@ CREATE TABLE pending_users
     email VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     info TEXT NOT NULL,
+	affiliation VARCHAR(255) NOT NULL,
+    department VARCHAR(255),
+    class int NOT NULL,
+    school VARCHAR(255) NOT NULL,
     PRIMARY KEY(id)
 );
 
@@ -44,7 +52,9 @@ CREATE TABLE contributions
     book_rating int,
     book_price double,
     description text,
-     ts TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+	ts TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+    book_photourl VARCHAR(255),
+    publisher VARCHAR(255) NOT NULL,
     PRIMARY KEY(id),
     FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
 );
@@ -58,6 +68,8 @@ CREATE TABLE pending_contributions
     book_rating int,
     book_price double,
 	description text,
+	book_photourl VARCHAR(255),
+    publisher VARCHAR(255) NOT NULL,
     PRIMARY KEY(id),
     FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
 );
@@ -81,7 +93,7 @@ CREATE TABLE reviews
     poster_id int not NULL,
     rating int,
     review_text text,
-   ts TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+    ts TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(id),
     FOREIGN KEY(contribution_id) REFERENCES contributions(id) ON DELETE cascade,
     FOREIGN KEY(poster_id) REFERENCES users(id) ON DELETE cascade
@@ -109,7 +121,7 @@ BEGIN
 	START TRANSACTION;
 
 	SELECT contribution_id, poster_id, review_text FROM pending_reviews WHERE id = _review_id INTO @contribution_id, @poster_id, @review_text;
-	INSERT INTO reviews (contribution_id, poster_id, review_text, ts) VALUES (@contribution_id, @poster_id, @review_text, now());
+	INSERT INTO reviews VALUES (DEFAULT, @contribution_id, @poster_id, @review_text, now());
 	DELETE FROM pending_reviews WHERE id = _review_id;
 
 	COMMIT;
@@ -123,8 +135,9 @@ BEGIN
 
 	START TRANSACTION;
 
-	SELECT first_name, last_name, email, password FROM pending_users WHERE id = _user_id INTO @first_name, @last_name, @email, @password;
-	INSERT INTO users (first_name, last_name, email, password) VALUES (@first_name, @last_name, @email, @password);
+	SELECT first_name, last_name, email, password, affiliation, department, class, school FROM pending_users 
+    WHERE id = _user_id INTO @first_name, @last_name, @email, @password, @affiliation, @department, @class, @school;
+	INSERT INTO users VALUES (DEFAULT, @first_name, @last_name, @email, @password, @affiliation, @department, @class, @school);
 	DELETE FROM pending_users WHERE id = _user_id;
 
 	COMMIT;
@@ -138,8 +151,9 @@ BEGIN
 
 	START TRANSACTION;
 
-	SELECT user_id, contribution_name, isbn_num, book_rating,book_price, description FROM pending_contributions WHERE id = _contribution_id INTO @user_id, @contribution_name, @isbn_num, @book_rating, @book_price, @description;
-	INSERT INTO contributions (user_id, contribution_name, isbn_num, book_rating,book_price, description, ts) VALUES (@user_id, @contribution_name, @isbn_num, @book_rating, @book_price, @description, now());
+	SELECT user_id, contribution_name, isbn_num, book_rating,book_price, description, book_photourl, publisher FROM pending_contributions 
+    WHERE id = _contribution_id INTO @user_id, @contribution_name, @isbn_num, @book_rating, @book_price, @description, @book_photourl, @publisher;
+	INSERT INTO contributions VALUES (DEFAULT, @user_id, @contribution_name, @isbn_num, @book_rating, @book_price, @description, now(), @book_photourl, @publisher);
 	DELETE FROM pending_contributions WHERE id = _contribution_id;
 
 	COMMIT;
@@ -164,14 +178,14 @@ BEGIN
 END $$
 
 DELIMITER ;
-INSERT INTO users (first_name, last_name, email, password, num_contributions) VALUES ('testuser', 'testpass', 'test@test.com', 'testpass', 6);
-INSERT INTO users (first_name, last_name, email, password, num_contributions) VALUES ('Suzanne', 'Collins', 'suzanne@uci.edu', 'collins', 3);
-INSERT INTO users (first_name, last_name, email, password, num_contributions) VALUES ( 'J.K.', 'Rowling', 'jk@uci.edu', 'rowling', 5);
-INSERT INTO users (first_name, last_name, email, password, num_contributions) VALUES ( 'Harper', 'Lee', 'harper@uci.edu', 'lee', 1);
-INSERT INTO users (first_name, last_name, email, password, num_contributions) VALUES ( 'Stephenie', 'Meyer', 'stephenie@uci.edu', 'meyer', 2);
-INSERT INTO users (first_name, last_name, email, password, num_contributions) VALUES ( 'Jane', 'Austen', 'jane@uci.edu', 'austen', 2);
-INSERT INTO users (first_name, last_name, email, password, num_contributions) VALUES ( 'Margaret', 'Mitchell', 'margaret@uci.edu', 'mitchell', 7);
-INSERT INTO users (first_name, last_name, email, password, num_contributions) VALUES ( 'Jane', 'Lee', 'jane@uci.edu', 'lee', 3);
+INSERT INTO users VALUES (DEFAULT, 'testuser', 'testpass', 'test@test.com', 'testpass', 6, 'Student', 'Informatics', 2015, 'Information and Computer Science');
+INSERT INTO users VALUES (DEFAULT,'Suzanne', 'Collins', 'suzanne@uci.edu', 'collins', 3, 'Faculty', 'Chemistry', 1990, 'Biological Sciences');
+INSERT INTO users VALUES (DEFAULT, 'J.K.', 'Rowling', 'jk@uci.edu', 'rowling', 5, 'Alumni', 'Asian American Studies', 2002, 'Humanities');
+INSERT INTO users VALUES (DEFAULT, 'Harper', 'Lee', 'harper@uci.edu', 'lee', 1, 'Staff', null, 2007, 'Nursing Science');
+INSERT INTO users VALUES (DEFAULT, 'Stephenie', 'Meyer', 'stephenie@uci.edu', 'meyer', 2, 'Faculty', 'Statistics and Statistical Theory', 2015, 'Information and Computer Science');
+INSERT INTO users VALUES (DEFAULT, 'Jane', 'Austen', 'jane@uci.edu', 'austen', 2, 'Student', 'Criminology, Law and Society', 2017, 'Law');
+INSERT INTO users VALUES (DEFAULT, 'Margaret', 'Mitchell', 'margaret@uci.edu', 'mitchell', 7, 'Student', 'Music', 2018, 'Arts');
+INSERT INTO users VALUES (DEFAULT, 'Jane', 'Lee', 'jane@uci.edu', 'lee', 3, 'Alumni', 'Business Administration', 1980, 'Business');
 
 
 INSERT INTO biography VALUES(1, 'testuser testpass', 'My purpose is for testing!', 'https://www.policygenius.com/blog/wp-content/uploads/2014/02/user_testing.jpg');
@@ -183,49 +197,52 @@ INSERT INTO biography VALUES(6, 'Jane Austen', 'An English novelist whose works 
 INSERT INTO biography VALUES(7, 'Margaret Mitchell', 'An American author and journalist. Known for writing the popular novel Gone with the Wind.', 'http://blogs.bookforum.com/wp-content/uploads/2013/12/Margaret-Mitchell.jpg');
 INSERT INTO biography VALUES(8, 'Jane Lee', 'Author of Gypsy Jane my life story.', 'http://d.gr-assets.com/books/1344737208l/14925831.jpg');
 
-INSERT INTO pending_users VALUES (DEFAULT, 'Jacob', 'Michaelson', 'jacob@uci.edu', 'michaelson', 'The name is Michaelson. Jacob Michaelson.');
+INSERT INTO pending_users VALUES (DEFAULT, 'Jacob', 'Michaelson', 'jacob@uci.edu', 'michaelson', 'The name is Michaelson. Jacob Michaelson.', 'Staff', null, 1999, 'Education');
+INSERT INTO pending_users VALUES (DEFAULT, 'Hector', 'Chen', 'hector@uci.edu', 'chen', 'Cha ching!', 'Student', 'Electrical Enginnering', 2016, 'Enginnering');
+INSERT INTO pending_users VALUES (DEFAULT, 'Louie', 'James', 'louie@uci.edu', 'james', 'The name is Michaelson. Jacob Michaelson.', 'Alumni', 'Literary Journalism', 1992, 'Humanities');
+INSERT INTO pending_users VALUES (DEFAULT, 'Ashley', 'Rodriguez', 'ashely@uci.edu', 'rodriguez', 'The name is Michaelson. Jacob Michaelson.', 'Student', null, 2017, 'Undeclared');
 
-INSERT INTO contributions (user_id, contribution_name, isbn_num, book_rating, book_price, description, ts) VALUES ('1', 'Book1', '0001', 0, 5.99, 'test book1', now());
-INSERT INTO contributions (user_id, contribution_name, isbn_num, book_rating, book_price, description, ts) VALUES ('1', 'Book2', '0002', 0, 6.99, 'test book2', now());
-INSERT INTO contributions (user_id, contribution_name, isbn_num, book_rating, book_price, description, ts) VALUES ('1', 'Book3', '0003', 0, 7.99, 'test book3', now());
-INSERT INTO contributions (user_id, contribution_name, isbn_num, book_rating, book_price, description, ts) VALUES ('1', 'Book4', '0004', 0, 8.99, 'test book4', now());
-INSERT INTO contributions (user_id, contribution_name, isbn_num, book_rating, book_price, description, ts) VALUES ('1', 'Book5', '0005', 0, 9.99, 'test book1', now());
-INSERT INTO contributions (user_id, contribution_name, isbn_num, book_rating, book_price, description, ts) VALUES ('1', 'Book6', '0006', 0, 19.99, 'test book1', now());
-INSERT INTO contributions VALUES (DEFAULT, '2', 'The Hunger Games', '0007', 4, 19.99, 'Hunger Games starring Katniss and Peeta', now());
-INSERT INTO contributions VALUES (DEFAULT, '2', 'Harry Potter and the Order of the Phoenix', '0008', 4, 19.99, 'A wizard', now());
-INSERT INTO contributions VALUES (DEFAULT, '2', 'To Kill a Mockingbird', '0008', 5, 4.99, 'Literature', now());
-INSERT INTO contributions VALUES (DEFAULT, '3', 'Twilight', '0009', 3, 19.99, 'Vampires', now());
-INSERT INTO contributions VALUES (DEFAULT, '3', 'Pride and Prejudice', '0010', 3, 19.99, 'Great', now());
-INSERT INTO contributions VALUES (DEFAULT, '3', 'Gone with the Wind', '0011', 3, 19.01, 'Windy', now());
-INSERT INTO contributions VALUES (DEFAULT, '3', 'The Chronicles of Narnia', '0012', 2, 29.99, 'Adventures walking into a closet', now());
-INSERT INTO contributions VALUES (DEFAULT, '3', 'Animal Farm', '0013', 1, 19.99, 'A classic', now());
-INSERT INTO contributions VALUES (DEFAULT, '4', 'The Giving Tree', '0014', 4, 8.99, 'Poems', now());
-INSERT INTO contributions VALUES (DEFAULT, '5', 'The Hitchhiker\'s Guide to the Galaxy', '0015', 2, 49.99, 'The guide to the galaxy', now());
-INSERT INTO contributions VALUES (DEFAULT, '5', 'Wuthering Heights', '0016', 0, 12.99, 'Another classic', now());
-INSERT INTO contributions VALUES (DEFAULT, '6', 'The Book Thief', '0017', 0, 17.99, 'Thief', now());
-INSERT INTO contributions VALUES (DEFAULT, '6', 'Memoirs of a Geisha', '0018', 4, 5.99, 'Magnificent', now());
-INSERT INTO contributions VALUES (DEFAULT, '7', 'The Da Vinci Code', '0019', 5, 99.99, 'How to crack the code', now());
-INSERT INTO contributions VALUES (DEFAULT, '7', 'Alice\'s Adventures in Wonderland & Through the Looking-Glass', '0020', 0, 102.99, 'Time is ticking', now());
-INSERT INTO contributions VALUES (DEFAULT, '7', '4-Book Boxed Set: The Hobbit and The Lord of the Rings ', '0021', 0, 399.99, 'So many books for such a small price', now());
-INSERT INTO contributions VALUES (DEFAULT, '7', 'Romeo and Juliet', '0022', 4, 2.99, 'Shakespeare Yea!', now());
-INSERT INTO contributions VALUES (DEFAULT, '7', 'Les Misérables', '0023', 0, 23.99, 'Very very interesting with singing', now());
-INSERT INTO contributions VALUES (DEFAULT, '7', 'The Fault in Our Stars', '0024', 2, 35.99, 'Good', now());
-INSERT INTO contributions VALUES (DEFAULT, '7', 'Lord of the Flies', '0025', 0, 19.99, 'There are pigs', now());
-INSERT INTO contributions VALUES (DEFAULT, '8', 'The Picture of Dorian Gray', '0026', 0, 9.99, 'Wild', now());
-INSERT INTO contributions VALUES (DEFAULT, '8', 'Ender\'s Game', '0027', 1, 29.99, 'A game', now());
-INSERT INTO contributions VALUES (DEFAULT, '8', 'Crime and Punishment', '0028', 0, 52.03, 'A very long book', now());
+INSERT INTO contributions VALUES (DEFAULT,'1', 'Book1', '0001', 0, 5.99, 'test book1', now(), 'http://kosmosaicbooks.com/wp-content/uploads/2011/07/WOT-Book-1-cover_web.jpg', 'Ace Books');
+INSERT INTO contributions VALUES (DEFAULT,'1', 'Book2', '0002', 0, 6.99, 'test book2', now(), 'http://img2.wikia.nocookie.net/__cb20130710023017/disney/images/7/75/The_Jungle_Book_2_cover.jpg', 'John Wiley & Sons');
+INSERT INTO contributions VALUES (DEFAULT,'1', 'Book3', '0003', 0, 7.99, 'test book3', now(), 'http://upload.wikimedia.org/wikipedia/en/b/ba/Airbender-CompleteBook3.jpg', 'Verso Books');
+INSERT INTO contributions VALUES (DEFAULT,'1', 'Book4', '0004', 0, 8.99, 'test book4', now(), 'http://mediaroom.scholastic.com/files/SAnimals_4.jpg', 'University of California Press');
+INSERT INTO contributions VALUES (DEFAULT,'1', 'Book5', '0005', 0, 9.99, 'test book1', now(), 'http://covers.booktopia.com.au/big/9780099596370/middle-school-ultimate-showdown.jpg', 'Scholastic Press');
+INSERT INTO contributions VALUES (DEFAULT,'1', 'Book6', '0006', 0, 19.99, 'test book1', now(), 'http://boltcity.com/wp-content/uploads/2014/02/Amulet-6-Cover.jpg', 'Remington & Co');
+INSERT INTO contributions VALUES (DEFAULT, '2', 'The Hunger Games', '0007', 4, 19.99, 'Hunger Games starring Katniss and Peeta', now(), 'http://upload.wikimedia.org/wikipedia/en/a/ab/Hunger_games.jpg', 'Phaidon Press');
+INSERT INTO contributions VALUES (DEFAULT, '2', 'Harry Potter and the Order of the Phoenix', '0008', 4, 19.99, 'A wizard', now(), 'http://harrypotterfanzone.com/wp-content/2009/06/ootp-us-jacket-art.jpg', 'Kensington Books');
+INSERT INTO contributions VALUES (DEFAULT, '2', 'To Kill a Mockingbird', '0008', 5, 4.99, 'Literature', now(), 'https://ritikab.files.wordpress.com/2010/07/to-kill-a-mockingbird2.jpg', 'B & W Publishing');
+INSERT INTO contributions VALUES (DEFAULT, '3', 'Twilight', '0009', 3, 19.99, 'Vampires', now(), 'http://upload.wikimedia.org/wikipedia/en/1/1d/Twilightbook.jpg', 'Blackwell Publishing');
+INSERT INTO contributions VALUES (DEFAULT, '3', 'Pride and Prejudice', '0010', 3, 19.99, 'Great', now(), 'https://themodernmanuscript.files.wordpress.com/2013/01/pride-and-prejudice-1946.jpg', 'Brill Publishers');
+INSERT INTO contributions VALUES (DEFAULT, '3', 'Gone with the Wind', '0011', 3, 19.01, 'Windy', now(), 'https://thepulitzerblog.files.wordpress.com/2014/03/gonewiththewind.jpg', 'Chick Publications');
+INSERT INTO contributions VALUES (DEFAULT, '3', 'The Chronicles of Narnia', '0012', 2, 29.99, 'Adventures walking into a closet', now(), 'http://cache.coverbrowser.com/image/classic-childrens-books/11-1.jpg', 'Cisco Press');
+INSERT INTO contributions VALUES (DEFAULT, '3', 'Animal Farm', '0013', 1, 19.99, 'A classic', now(), 'http://www.penguin.com.au/jpg-large/9780141036137.jpg', 'Remington & Co');
+INSERT INTO contributions VALUES (DEFAULT, '4', 'The Giving Tree', '0014', 4, 8.99, 'Poems', now(), 'http://alisoncherrybooks.com/storage/GivingTree.jpg?__SQUARESPACE_CACHEVERSION=1323369477554', 'Remington & Co');
+INSERT INTO contributions VALUES (DEFAULT, '5', 'The Hitchhiker\'s Guide to the Galaxy', '0015', 2, 49.99, 'The guide to the galaxy', now(), 'http://vignette4.wikia.nocookie.net/hitchhikers/images/1/11/The_Hitchhiker\'s_Guide_to_the_Galaxy.jpg/revision/latest?cb=20140520174710', 'Verso Books');
+INSERT INTO contributions VALUES (DEFAULT, '5', 'Wuthering Heights', '0016', 0, 12.99, 'Another classic', now(), 'https://hauntedhearts.files.wordpress.com/2012/11/wuthering-heights.jpg', 'Ace Books');
+INSERT INTO contributions VALUES (DEFAULT, '6', 'The Book Thief', '0017', 0, 17.99, 'Thief', now(), 'http://bibliofiend.com/wp-content/uploads/2013/09/bookthiefposter.jpg', 'Scholastic Press');
+INSERT INTO contributions VALUES (DEFAULT, '6', 'Memoirs of a Geisha', '0018', 4, 5.99, 'Magnificent', now(), 'http://d.gr-assets.com/books/1388367666l/930.jpg', 'Ace Books');
+INSERT INTO contributions VALUES (DEFAULT, '7', 'The Da Vinci Code', '0019', 5, 99.99, 'How to crack the code', now(), 'http://www.marshall.edu/library/bannedbooks/Images/davincicode.jpg', 'Scholastic Press');
+INSERT INTO contributions VALUES (DEFAULT, '7', 'Alice\'s Adventures in Wonderland & Through the Looking-Glass', '0020', 0, 102.99, 'Time is ticking', now(), 'http://d.gr-assets.com/books/1327872220l/24213.jpg', 'University of California Press');
+INSERT INTO contributions VALUES (DEFAULT, '7', '4-Book Boxed Set: The Hobbit and The Lord of the Rings', '0021', 0, 399.99, 'So many books for such a small price', now(), 'http://www.bangzo.com/ebayimages/jrrtolkin_boxed.jpg', 'University of California Press');
+INSERT INTO contributions VALUES (DEFAULT, '7', 'Romeo and Juliet', '0022', 4, 2.99, 'Shakespeare Yea!', now(), 'http://d28hgpri8am2if.cloudfront.net/book_images/cvr9781451621709_9781451621709_hr.jpg', 'Blackwell Publishing');
+INSERT INTO contributions VALUES (DEFAULT, '7', 'Les Misérables', '0023', 0, 23.99, 'Very very interesting with singing', now(), 'http://www.pagepulp.com/wp-content/38.jpg', 'Scholastic Press');
+INSERT INTO contributions VALUES (DEFAULT, '7', 'The Fault in Our Stars', '0024', 2, 35.99, 'Good', now(), 'http://upload.wikimedia.org/wikipedia/en/a/a9/The_Fault_in_Our_Stars.jpg', 'Blackwell Publishing');
+INSERT INTO contributions VALUES (DEFAULT, '7', 'Lord of the Flies', '0025', 0, 19.99, 'There are pigs', now(), 'http://ecx.images-amazon.com/images/I/51H9V4kDN%2BL.jpg', 'Scholastic Press');
+INSERT INTO contributions VALUES (DEFAULT, '8', 'The Picture of Dorian Gray', '0026', 0, 9.99, 'Wild', now(), 'http://ecx.images-amazon.com/images/I/51QYC8ZZB6L.jpg', 'Brill Publishers');
+INSERT INTO contributions VALUES (DEFAULT, '8', 'Ender\'s Game', '0027', 1, 29.99, 'A game', now(), 'http://ecx.images-amazon.com/images/I/610KU5avW4L.jpg', 'Hackett Publishing Company');
+INSERT INTO contributions VALUES (DEFAULT, '8', 'Crime and Punishment', '0028', 0, 52.03, 'A very long book', now(), 'https://adambenjones.wikispaces.com/file/view/crime.jpg/32566375/268x436/crime.jpg', 'Cisco Press');
 
-INSERT INTO pending_contributions VALUES(1, 1, 'The Alchemist', '0029', 0, 1.00, 'Powerful addicting beautifully written');
-INSERT INTO pending_contributions VALUES(DEFAULT, 1, 'Charlotte\'s Web', '0030', 0, 50.00, 'Spiders and pigs and much much more');
-INSERT INTO pending_contributions VALUES(DEFAULT, 2, 'Anne of Green Gables', '0031', 0, 65.99, 'Greeny');
-INSERT INTO pending_contributions VALUES(DEFAULT, 3, 'Fahrenheit 451', '0032', 0, 35.99, 'Interesting');
-INSERT INTO pending_contributions VALUES(DEFAULT, 7, 'Of Mice and Men', '0033', 0, 27.00, 'Novel literature');
-INSERT INTO pending_contributions VALUES(DEFAULT, 7, 'Dracula', '0034', 0, 25.99, 'More vampires');
-INSERT INTO pending_contributions VALUES(DEFAULT, 7, 'The Help ', '0035', 0, 29.23, 'Turned into a movie');
-INSERT INTO pending_contributions VALUES(DEFAULT, 8, 'Divergent', '0036', 0, 11.99, 'Science fiction');
-INSERT INTO pending_contributions VALUES(DEFAULT, 8, 'A Wrinkle in Time', '0037', 0, 12.03, 'Must fix this wrinkle');
-INSERT INTO pending_contributions VALUES(DEFAULT, 8, 'The Princess Bride', '0038', 0, 14.99, 'Wedding dress');
-INSERT INTO pending_contributions VALUES(DEFAULT, 8, 'Brave New World', '0039', 0, 3.99, 'Yay!');
+INSERT INTO pending_contributions VALUES(1, 1, 'The Alchemist', '0029', 0, 1.00, 'Powerful addicting beautifully written', 'http://static1.squarespace.com/static/527fdb09e4b0a82a76942ecf/52d586b1e4b0c4f1c24c1880/532a1be5e4b079860b034df5/1395268604438/The+Alchemist.jpg', 'University of California Press');
+INSERT INTO pending_contributions VALUES(DEFAULT, 1, 'Charlotte\'s Web', '0030', 0, 50.00, 'Spiders and pigs and much much more', 'http://www.kidsmomo.com/wordpress/wp-content/uploads/charlottes-web-cover.gif', 'Hackett Publishing Company');
+INSERT INTO pending_contributions VALUES(DEFAULT, 2, 'Anne of Green Gables', '0031', 0, 65.99, 'Greeny', 'http://thebooksmugglers.com/wp-content/uploads/2015/01/AnneGreenGables17.jpg', 'Chick Publications');
+INSERT INTO pending_contributions VALUES(DEFAULT, 3, 'Fahrenheit 451', '0032', 0, 35.99, 'Interesting', 'http://bookriotcom.c.presscdn.com/wp-content/uploads/2012/09/Fahrenheit-451-2012-cover.jpeg', 'Blackwell Publishing');
+INSERT INTO pending_contributions VALUES(DEFAULT, 7, 'Of Mice and Men', '0033', 0, 27.00, 'Novel literature', 'http://www.marshall.edu/library/bannedbooks/Images/miceandmen.gif', 'Verso Books');
+INSERT INTO pending_contributions VALUES(DEFAULT, 7, 'Dracula', '0034', 0, 25.99, 'More vampires', 'http://www.theedgesusu.co.uk/wp-content/uploads/2014/10/dracula-book-cover-e1368750274302.jpg','Scholastic Press');
+INSERT INTO pending_contributions VALUES(DEFAULT, 7, 'The Help ', '0035', 0, 29.23, 'Turned into a movie', 'http://www.penguin.com.au/jpg-large/9780241956533.jpg', 'Chick Publications');
+INSERT INTO pending_contributions VALUES(DEFAULT, 8, 'Divergent', '0036', 0, 11.99, 'Science fiction', 'http://api.ning.com/files/BfJIQarv7Anu*u*5SDcrOgfEZPmDtGDnAJ1ARWxeixXALyrmmTyLmeG2M484bJ-Y9zpFehZrKxZnJifw6YvGbvR9vI4LKs-H/divergent_hq.jpg', 'Remington & Co');
+INSERT INTO pending_contributions VALUES(DEFAULT, 8, 'A Wrinkle in Time', '0037', 0, 12.03, 'Must fix this wrinkle', 'http://www.saltmanz.com/pictures/albums/Cover%20Scans/Book%20Covers/Wrinkle%20in%20Time.jpg', 'John Wiley & Sons');
+INSERT INTO pending_contributions VALUES(DEFAULT, 8, 'The Princess Bride', '0038', 0, 14.99, 'Wedding dress', 'http://ecx.images-amazon.com/images/I/91K4xKACvOL._SL1500_.jpg', 'John Wiley & Sons');
+INSERT INTO pending_contributions VALUES(DEFAULT, 8, 'Brave New World', '0039', 0, 3.99, 'Yay!', 'https://murderbymedia.files.wordpress.com/2014/09/cover-new_905.jpg', 'Dick and Fitzgerald');
 
 INSERT INTO pending_reviews VALUES(DEFAULT, 20, 2, 4, 'I cracked the code. The movie did not do justice to this book.');
 INSERT INTO pending_reviews VALUES(DEFAULT, 28, 4, 5,'Ender\'s Game is a great sci-fi boook. It not only manages to have a strong message, but it is also a joy to read. The plot is enthralling, the characters are complex and realistic, and the descriptions of the battleroom are so realistic I get lost in it.');
