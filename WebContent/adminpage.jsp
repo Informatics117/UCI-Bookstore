@@ -42,6 +42,9 @@ try{
 	String review_id = request.getParameter("review_id");
 	String contribution_id = request.getParameter("contribution_id");
 	String user_id = request.getParameter("user_id");
+	String reject_review = request.getParameter("reject_review");
+	String reject_contribution = request.getParameter("reject_contribution");
+	String reject_user = request.getParameter("reject_user");
 	
 	String query;
 	Statement approval = connection.createStatement();
@@ -65,6 +68,25 @@ try{
 		approval.executeUpdate(query);
 		out.print("<p>User has been approved.</p>");
 	}
+	else if(reject_review != null && reject_review.length() > 0)
+	{
+		query = "DELETE FROM pending_reviews WHERE pending_reviews.id = '"+reject_review+"'";
+		approval.executeUpdate(query);
+		out.print("<p>Review has been rejected and removed.</p>");
+	}
+	else if(reject_contribution != null && reject_contribution.length() > 0)
+	{
+		query = "DELETE FROM pending_contributions WHERE id = '"+reject_contribution+"'";
+		approval.executeUpdate(query);
+		out.print("<p>Contribution has been rejected and removed.</p>");
+	}
+	else if(reject_user != null && reject_user.length() > 0)
+	{
+		query = "DELETE from pending_users WHERE id = '"+reject_user+"'";
+		approval.executeUpdate(query);
+		out.print("<p>User has been rejected and removed.</p>");
+	}
+	
 	out.println("</div>");
 	out.println("</div>");
 	out.println("<hr>");
@@ -88,8 +110,9 @@ try{
 		{
 		out.println("<div class='row admin-row'>");
 		out.println("<p class='admin-p'>Poster ID: "+rs.getInt(3)+ "</p>");
-		out.println("<p class='admin-p'>Review: "+rs.getString(4)+ "</p>");
+		out.println("<p class='admin-p'>Review: "+rs.getString(5)+ "</p>");
 		out.println("<form method='POST' action='adminpage.jsp'><input type='hidden' value='" + rs.getInt(1) + "' name='review_id'><button type='submit' class='btn btn-default'>Approve Post</button></form>");
+		out.println("<form method='POST' action='adminpage.jsp'><input type='hidden' value='" + rs.getInt(1) + "' name='reject_review'><button type='submit' class='btn btn-default'>Reject and Remove Post</button></form>");
 		out.println("</div>");
 		} while(rs.next());
 	}
@@ -119,6 +142,7 @@ try{
 		out.println("<p class='admin-p'>Price: $"+rs1.getDouble(6)+ "</p>");
 		out.println("<p class='admin-p'>Description: "+rs1.getString(7)+ "</p>");
 		out.println("<form method='POST' action='adminpage.jsp'><input type='hidden' value='" + rs1.getInt(1) + "' name='contribution_id'><button type='submit' class='btn btn-default'>Approve Contribution</button></form>");
+		out.println("<form method='POST' action='adminpage.jsp'><input type='hidden' value='" + rs1.getInt(1) + "' name='reject_contribution'><button type='submit' class='btn btn-default'>Reject and Remove Contribution</button></form>");
 		out.println("</div>");
 		} while(rs1.next());
 		
@@ -147,6 +171,7 @@ try{
 		out.println("<p class='admin-p'>Email: "+rs2.getString(4)+ "</p>");
 		out.println("<p class='admin-p'>Info: "+rs2.getString(6)+ "</p>");
 		out.println("<form method='POST' action='adminpage.jsp'><input type='hidden' value='" + rs2.getInt(1) + "' name='user_id'><button type='submit' class='btn btn-default'>Approve User</button></form>");
+		out.println("<form method='POST' action='adminpage.jsp'><input type='hidden' value='" + rs2.getInt(1) + "' name='reject_user'><button type='submit' class='btn btn-default'>Reject and Remove User</button></form>");
 		out.println("</div>");
 		} while(rs2.next());
 	}
