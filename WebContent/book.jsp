@@ -69,13 +69,14 @@ try{
 	}
 	else
 	{
+		String imageurl = rs.getString(9);
 		out.println("<div class='row'>");
 		out.println("<div class='col-sm-6'>");
-		out.println("<img src='http://www.michaelsharp.org/files/PlaceholderBook.png'/>");
+		out.println("<img src='"+imageurl+"'/ height = '248' width = '200'>");
 		out.println("</div>");
 		out.println("<div class='col-sm-6'>");
 		out.println("<h2>"+rs.getString(3)+ "</h2>");
-		out.println("<h4>by "+"<a href = '/Bookstore/author.jsp?author_id="+rs.getInt(2)+"'> "+ rs.getString(9) + rs.getString(10) + "</a></h4>");
+		out.println("<h4>by "+"<a href = '/Bookstore/author.jsp?author_id="+rs.getInt(2)+"'> "+ rs.getString(12) + " " + rs.getString(13) + "</a></h4>");
 		out.println("<h5>ISBN number: "+rs.getInt(4)+ "</h5>");
 		out.println("<h5>Price: "+rs.getDouble(6)+ "</h5>");
 		out.println("</div>");
