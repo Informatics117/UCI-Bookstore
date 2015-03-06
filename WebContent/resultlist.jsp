@@ -92,19 +92,24 @@ try{
 	{
 		out.println("<div class='row'>");
 
+		String imageurl = rs1.getString(9);
+		
 		out.println("<div class='col-sm-4'>");
-		out.println("<img src='http://www.michaelsharp.org/files/PlaceholderBook.png'/>");
+		out.println("<img src='"+imageurl+"'/ height = '248' width = '200'>");
 		out.println("</div>");
-		int author_id = rs1.getInt(9);
+		int author_id = rs1.getInt(2);
 
 		out.println("<div class='col-sm-8'>");
 		//First Row
 		out.println("<div class='row'>");
 		out.println("<div class='col-sm-4'>");
-		out.println("<p><a href = '/Bookstore/book.jsp?book_id="+rs1.getInt(1)+"'>"+ rs1.getString(3) + "</a></p>");
+		out.println("<p><a href = '/Bookstore/book.jsp?book_id="+rs1.getInt(2)+"'>"+ rs1.getString(3) + "</a></p>");
 		out.println("</div>");
 		out.println("<div class='col-sm-4'>");
 		out.println("<img src='http://www.puz.ca/images/stars-"+rs1.getInt(5)+".gif'/>");
+		out.println("</div>");
+		out.println("<div class='col-sm-4'>");
+		out.println("<p>Publisher: "+rs1.getString(10)+"</p>");
 		out.println("</div>");
 		out.println("</div>");
 		//Second row
@@ -113,7 +118,7 @@ try{
 		out.println("<p>Written By:</p>");
 		out.println("</div>");
 		out.println("<div class='col-sm-4'>");
-		out.println("<a href = '/Bookstore/author.jsp?author_id="+author_id+"'>"+ rs1.getString(9) + rs1.getString(10) + "</a>");
+		out.println("<a href = '/Bookstore/author.jsp?author_id="+author_id+"'>"+ rs1.getString(12) + rs1.getString(13) + "</a>");
 		out.println("</div>");
 		out.println("</div>");
 		//Third Row
@@ -122,7 +127,7 @@ try{
 		out.println("<p>Paperback:</p>");
 		out.println("</div>");
 		out.println("<div class='col-sm-4'>");
-		out.println("<p>$19.99</p>");
+		out.println("<p>"+rs1.getDouble(6)+"</p>");
 		out.println("</div>");
 		out.println("<div class='col-sm-4'>");
 		out.println("<p>Buy Now</p>");
@@ -134,7 +139,7 @@ try{
 		out.println("<p>Hardcover:</p>");
 		out.println("</div>");
 		out.println("<div class='col-sm-4'>");
-		out.println("<p>$29.99</p>");
+		out.println("<p>"+rs1.getDouble(6)+"</p>");
 		out.println("</div>");
 		out.println("<div class='col-sm-4'>");
 		out.println("<p>Buy Now</p>");

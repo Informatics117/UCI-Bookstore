@@ -12,6 +12,20 @@
  javax.servlet.http.*,
  javax.servlet.*"%>
  
+<script type = "text/javascript">
+ function confirmComplete() {
+	 var answer=confirm("Are you sure you want to continue?");
+	 if (answer==true)
+	   {
+	     return true;
+	   }
+	 else
+	   {
+	     return false;
+	   }
+	 }
+ </script>
+ 
  <%-- Java code to collect variables. --%>
 <body>
 	<div class="container">
@@ -111,8 +125,8 @@ try{
 		out.println("<div class='row admin-row'>");
 		out.println("<p class='admin-p'>Poster ID: "+rs.getInt(3)+ "</p>");
 		out.println("<p class='admin-p'>Review: "+rs.getString(5)+ "</p>");
-		out.println("<form method='POST' action='adminpage.jsp'><input type='hidden' value='" + rs.getInt(1) + "' name='review_id'><button type='submit' class='btn btn-default'>Approve Post</button></form>");
-		out.println("<form method='POST' action='adminpage.jsp'><input type='hidden' value='" + rs.getInt(1) + "' name='reject_review'><button type='submit' class='btn btn-default'>Reject and Remove Post</button></form>");
+		out.println("<form method='POST' action='adminpage.jsp'><input type='hidden' value='" + rs.getInt(1) + "' name='review_id'><button type='submit' onclick='{return confirmComplete();}' class='btn btn-default'>Approve Post</button></form>");
+		out.println("<form method='POST' action='adminpage.jsp'><input type='hidden' value='" + rs.getInt(1) + "' name='reject_review'><button type='submit' onclick='{return confirmComplete();}' class='btn btn-default'>Reject and Remove Post</button></form>");
 		out.println("</div>");
 		} while(rs.next());
 	}
@@ -141,8 +155,8 @@ try{
 		out.println("<p class='admin-p'>Rating: "+rs1.getInt(5)+ "</p>");
 		out.println("<p class='admin-p'>Price: $"+rs1.getDouble(6)+ "</p>");
 		out.println("<p class='admin-p'>Description: "+rs1.getString(7)+ "</p>");
-		out.println("<form method='POST' action='adminpage.jsp'><input type='hidden' value='" + rs1.getInt(1) + "' name='contribution_id'><button type='submit' class='btn btn-default'>Approve Contribution</button></form>");
-		out.println("<form method='POST' action='adminpage.jsp'><input type='hidden' value='" + rs1.getInt(1) + "' name='reject_contribution'><button type='submit' class='btn btn-default'>Reject and Remove Contribution</button></form>");
+		out.println("<form method='POST' action='adminpage.jsp'><input type='hidden' value='" + rs1.getInt(1) + "' name='contribution_id'><button type='submit' onclick='{return confirmComplete();}' class='btn btn-default'>Approve Contribution</button></form>");
+		out.println("<form method='POST' action='adminpage.jsp'><input type='hidden' value='" + rs1.getInt(1) + "' name='reject_contribution'><button type='submit' onclick='{return confirmComplete();}' class='btn btn-default'>Reject and Remove Contribution</button></form>");
 		out.println("</div>");
 		} while(rs1.next());
 		
@@ -170,8 +184,8 @@ try{
 		out.println("<p class='admin-p'>Last Name: "+rs2.getString(3)+ "</p>");
 		out.println("<p class='admin-p'>Email: "+rs2.getString(4)+ "</p>");
 		out.println("<p class='admin-p'>Info: "+rs2.getString(6)+ "</p>");
-		out.println("<form method='POST' action='adminpage.jsp'><input type='hidden' value='" + rs2.getInt(1) + "' name='user_id'><button type='submit' class='btn btn-default'>Approve User</button></form>");
-		out.println("<form method='POST' action='adminpage.jsp'><input type='hidden' value='" + rs2.getInt(1) + "' name='reject_user'><button type='submit' class='btn btn-default'>Reject and Remove User</button></form>");
+		out.println("<form method='POST' action='adminpage.jsp'><input type='hidden' value='" + rs2.getInt(1) + "' name='user_id'><button type='submit' onclick='{return confirmComplete();}' class='btn btn-default'>Approve User</button></form>");
+		out.println("<form method='POST' action='adminpage.jsp'><input type='hidden' value='" + rs2.getInt(1) + "' name='reject_user'><button type='submit' onclick='{return confirmComplete();}' class='btn btn-default'>Reject and Remove User</button></form>");
 		out.println("</div>");
 		} while(rs2.next());
 	}
