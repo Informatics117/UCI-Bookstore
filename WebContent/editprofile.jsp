@@ -77,7 +77,9 @@ try{
 	
 	if(edit.length() > 0)
 	{
+		info = info.replaceAll("'", "''");
 		query = "CALL edit_bio('"+id+"','"+photo_url+"','"+display_name+"','"+info+"')";
+		
 		edits.executeUpdate(query);
 		out.println("<h4>Changes have been made.</h4>");
 	}
