@@ -120,8 +120,8 @@ BEGIN
 
 	START TRANSACTION;
 
-	SELECT contribution_id, poster_id, review_text FROM pending_reviews WHERE id = _review_id INTO @contribution_id, @poster_id, @review_text;
-	INSERT INTO reviews VALUES (DEFAULT, @contribution_id, @poster_id, @review_text, now());
+	SELECT contribution_id, poster_id, rating, review_text FROM pending_reviews WHERE id = _review_id INTO @contribution_id, @poster_id, @rating, @review_text;
+	INSERT INTO reviews VALUES (DEFAULT, @contribution_id, @poster_id, @rating, @review_text, now());
 	DELETE FROM pending_reviews WHERE id = _review_id;
 
 	COMMIT;
