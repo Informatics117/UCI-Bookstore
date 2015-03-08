@@ -20,7 +20,9 @@
     					
 <%
 	if(session.getAttribute("user") == null && session.getAttribute("admin") == null){
-		out.println("<li><button href='login.jsp' class='btn btn-default'>Login</button></li>");
+		
+		//<button type="button"><a href="yourlink.com">Link link</a></button>
+		out.println("<li><form action='/Bookstore/login.jsp'><input type = 'submit' class='btn btn-default' value = 'Login'></form></li>");
 
 	}
 	else
@@ -37,7 +39,7 @@
 	
 	if(userName == null)
 	{
-		out.println("<li><button href='login.jsp' class='btn btn-default'>Login</button></li>");
+		out.println("<li><form action='/Bookstore/login.jsp'><input type = 'submit' class='btn btn-default' value = 'Login'></form></li>");
 	}
 	else
 	{
