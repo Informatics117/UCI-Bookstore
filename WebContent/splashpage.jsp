@@ -61,14 +61,15 @@ try{
 	out.println("<h5>Recent Contributions</h5>");
 	if(rs1 == null || !rs1.first())
 	{
-		out.println("<h4>No recent reviews. </h4>");
+		out.println("<h4>No recent contributions. </h4>");
 	}
 	else
 	{
 		do{
 			out.println("<div class='row admin-row'>");
+			out.println("<img src='"+rs1.getString(9)+"'/ height = '248' width = '200'>");
 			out.println("<p class='admin-p'>Book Title: <a href = '/Bookstore/book.jsp?book_id="+rs1.getInt(1)+"'>"+ rs1.getString(3) + "</a></p>");
-			out.println("<p class='admin-p'>Written by: <a href = '/Bookstore/book.jsp?book_id="+rs1.getInt(2)+"'>"+rs1.getString(10) + " " + rs1.getString(11) + "</a></p>");
+			out.println("<p class='admin-p'>Written by: <a href = '/Bookstore/book.jsp?book_id="+rs1.getInt(2)+"'>"+rs1.getString(12) + " " + rs1.getString(13) + "</a></p>");
 			out.println("</div>");
 			
 			
