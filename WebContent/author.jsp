@@ -16,11 +16,18 @@
 	<%
 try{
 	
-	int author_id = 0;
+	int author_id = -1;
 	out.println("<div class='row'>");
 	out.println("<div class='col-sm-4'>");
 	try{
-		author_id = Integer.parseInt(request.getParameter("author_id"));
+		if(request.getParameter("author_id") == null)
+		{
+			author_id = Integer.parseInt(session.getAttribute("id").toString());
+		}
+		else
+		{
+			author_id = Integer.parseInt(request.getParameter("author_id"));
+		}
 	} catch (Exception e)
 	{
 		out.println("<label>Invalid Author ID</label>");
