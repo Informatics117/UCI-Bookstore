@@ -69,7 +69,7 @@ try{
 			out.println("<div class='row admin-row'>");
 			out.println("<img src='"+rs1.getString(9)+"'/ height = '248' width = '200'>");
 			out.println("<p class='admin-p'>Book Title: <a href = '/Bookstore/book.jsp?book_id="+rs1.getInt(1)+"'>"+ rs1.getString(3) + "</a></p>");
-			out.println("<p class='admin-p'>Written by: <a href = '/Bookstore/book.jsp?book_id="+rs1.getInt(2)+"'>"+rs1.getString(12) + " " + rs1.getString(13) + "</a></p>");
+			out.println("<p class='admin-p'>Written by: <a href = '/Bookstore/author.jsp?author_id="+rs1.getInt(2)+"'>"+rs1.getString(12) + " " + rs1.getString(13) + "</a></p>");
 			out.println("</div>");
 			
 			
