@@ -113,6 +113,25 @@ CREATE TABLE administrators
 
 DELIMITER $$
 
+CREATE PROCEDURE submit_contribution(
+_user_id INT,
+_contribution_name VARCHAR(255),
+_isbn_num INT,
+_book_price DOUBLE,
+_description text,
+_photo_url VARCHAR(255),
+_publisher VARCHAR(255)
+)
+BEGIN
+
+	START TRANSACTION;
+
+	INSERT INTO pending_contributions VALUES(DEFAULT, _user_id, _contribution_name, isbn_num, 0, _book_price, _description, _photo_url, _publisher);
+
+	COMMIT;
+
+END $$
+
 CREATE PROCEDURE approve_review(
 _review_id INT
 )
