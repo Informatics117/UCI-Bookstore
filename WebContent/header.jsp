@@ -57,6 +57,7 @@
     					<li><a href="splashpage.jsp">Home</a></li>
     					<li><a href="author.jsp">My Page</a></li>
     					<li><a href="search.jsp">Search</a></li>
+    					<li><<a href="submit.jsp">Submit Book</a></li>
     				</ul>
     			</div>
     		</div>
