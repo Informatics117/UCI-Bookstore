@@ -16,14 +16,14 @@
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
   <style>
   .carousel-inner > .item > img,
   .carousel-inner > .item > a > img {
-      width: 30%;
+      width: 25%;
       margin: auto;
+      height: 350px;
   }
   </style>
 
@@ -31,38 +31,6 @@
 <body>
 	<div class="container">
 	<br>
-<%
-	out.println("<div class='row'>");
-	out.println("<div class='col-sm-4'>");
-	if(session.getAttribute("user") == null && session.getAttribute("admin") == null){
-		out.println("<h4>You are not logged in</h4>");
-	}
-	else
-	{
-	String userName = null;
-	String sessionID = null;
-	Cookie[] cookies = request.getCookies();
-	if(cookies !=null){
-	for(Cookie cookie : cookies){
-	    if(cookie.getName().equals("user") || cookie.getName().equals("admin")) userName = cookie.getValue();
-	}
-	
-	if(userName == null)
-	{
-		out.println("<h4>You are not logged in</h4>");
-	}
-	else
-	{
-	out.println("<h5>You are logged in as "+userName+"</h5>");
-	out.println("<form method='POST' action='logout.jsp'><input type='hidden' value='true' name='logout'><button type='submit' class='btn btn-default'>Logout</button></form>");
-	}
-	}
-	}
-	out.println("</div>");
-	out.println("</div>");
-	out.println("<hr>");
-%>
-
 
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
   <!-- Indicators -->
@@ -124,27 +92,38 @@ try{
 </div>
 
 <hr>
+<div class='row'>
+	<h4>Recent Reviews</h4>
+</div>
+<div class="container">
+<div id="myCarousel1" class="carousel slide" data-interval="false">
+	<div class="carousel-inner">
+		<div class="item active">
 
 <%	
 	Statement s = connection.createStatement();
 	ResultSet rs = s.executeQuery("SELECT * from reviews JOIN contributions on contributions.id = reviews.contribution_id ORDER BY reviews.ts DESC LIMIT 5");
 	
-	out.println("<div class='col-sm-6'>");
-	out.println("<h5>Recent Reviews</h5>");
+	//out.println("<div class='row'>");
+	//out.println("<h4>Recent Reviews</h4>");
 	if(rs == null || !rs.first())
 	{
-		out.println("<4>No recent reviews. </h4>");
+		out.println("<h4>No recent reviews. </h4>");
 	}
 	else
 	{
-		do{
-			out.println("<div class='row admin-row'>");
-			out.println("<p class='admin-p'>Book Title: <a href = '/Bookstore/book.jsp?book_id="+rs.getInt(4)+"'>"+ rs.getString(9) + "</a></p>");
-			out.println("<p class='admin-p'>Review: "+rs.getString(5) + "</p>");
+			//out.println("<div class='row admin-row'>");
+			out.println("<p class='admin-p text-center carousel-review-link'><a href = '/Bookstore/book.jsp?book_id="+rs.getInt(4)+"'>"+ rs.getString(9) + "</a></p>");
+			out.println("<p class='admin-p carousel-text'>"+rs.getString(5) + "</p>");
 			out.println("</div>");
-		} while(rs.next());
+		while(rs.next()) {
+			out.println("<div class='item'>");
+			//out.println("<div class='row admin-row'>");
+			out.println("<p class='admin-p  text-center carousel-review-link'><a href = '/Bookstore/book.jsp?book_id="+rs.getInt(4)+"'>"+ rs.getString(9) + "</a></p>");
+			out.println("<p class='admin-p carousel-text'>"+rs.getString(5) + "</p>");
+			out.println("</div>");
+			} 
 	}	
-	out.println("</div>");
 	
 }
  	catch (Exception e)
@@ -152,6 +131,19 @@ try{
 	out.println(e);
 }
 %>
+	</div>
+		<!-- Controls -->
+	<a class="left carousel-control" href="#myCarousel1" role="button" data-slide="prev">
+			<span class="glyphicon glyphicon-chevron-left"></span>
+	</a>
+
+	<a class="right carousel-control" href="#myCarousel1" role="button" data-slide="next">
+			<span class="glyphicon glyphicon-chevron-right"></span>
+	</a>
+
+</div>
+</div>
+<hr>
 </div>
 </div>
 </body>
