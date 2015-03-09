@@ -88,9 +88,6 @@ try{
 	Statement s1 = connection.createStatement();
 	ResultSet rs1 = s1.executeQuery("SELECT * from contributions JOIN users on users.id = contributions.user_id ORDER BY ts DESC LIMIT 5");
 	
-//	out.println("<div class='row'>");
-//	out.println("<div class='col-sm-6 scrollable'>");
-//	out.println("<h5>Recent Contributions</h5>");
 	if(rs1 == null || !rs1.first())
 	{
 		out.println("<h4>No recent contributions. </h4>");
@@ -123,16 +120,7 @@ try{
 	out.println("</div>");
 	
 %>
-
-<!-- Left and right controls -->
-  <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
+</div>
 </div>
 
 <hr>
@@ -164,5 +152,6 @@ try{
 	out.println(e);
 }
 %>
+</div>
 </div>
 </body>
