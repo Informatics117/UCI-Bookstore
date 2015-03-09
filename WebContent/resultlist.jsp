@@ -76,7 +76,7 @@ try{
 		//First Row
 		out.println("<div class='row'>");
 		out.println("<div class='col-sm-4'>");
-		out.println("<p><a href = '/Bookstore/book.jsp?book_id="+rs1.getInt(2)+"'>"+ rs1.getString(3) + "</a></p>");
+		out.println("<p><a href = '/Bookstore/book.jsp?book_id="+rs1.getInt(1)+"'>"+ rs1.getString(3) + "</a></p>");
 		out.println("</div>");
 		out.println("<div class='col-sm-4'>");
 		out.println("<img src='http://www.puz.ca/images/stars-"+rs1.getInt(5)+".gif'/>");
