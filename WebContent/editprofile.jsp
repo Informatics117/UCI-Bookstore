@@ -41,23 +41,19 @@ try{
 	
 	if(userName == null)
 	{
-		out.println("<label>You are not logged in</label>");
 	}
 	else
 	{
-	out.println("<label>You are logged in as "+userName+"</label>");
 	out.println("<label><a href = '/Bookstore/author.jsp?author_id="+id+"'>Return to Profile</a><label>");
 	out.println("</div>");
 	out.println("</div>");
 	out.println("<div class='row'>");
 	out.println("<div class='col-sm-4'>");
-	out.println("<form method='POST' action='logout.jsp'><input type='hidden' value='true' name='logout'><button type='submit' class='btn btn-default'>Logout</button></form>");
 	out.println("</div>");
 	out.println("</div>");
 	}
 	}
 	}
-	out.println("<hr>");
 %>
 
 <%

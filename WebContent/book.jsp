@@ -13,39 +13,8 @@
 <html>
 <body>
 	<div class="container">
-<%
-	out.println("<div class='row'>");
-	out.println("<div class='col-sm-4'>");
-	if(session.getAttribute("user") == null && session.getAttribute("admin") == null){
-		out.println("<h4>You are not logged in</h4>");
-	}
-	else
-	{
-	String userName = null;
-	String sessionID = null;
-	Cookie[] cookies = request.getCookies();
-	if(cookies !=null){
-	for(Cookie cookie : cookies){
-	    if(cookie.getName().equals("user") || cookie.getName().equals("admin")) userName = cookie.getValue();
-	}
-	
-	if(userName == null)
-	{
-		out.println("<h4>You are not logged in</h4>");
-	}
-	else
-	{
-	out.println("<h5>You are logged in as "+userName+"</h5>");
-	out.println("<form method='POST' action='logout.jsp'><input type='hidden' value='true' name='logout'><button type='submit' class='btn btn-default'>Logout</button></form>");
-	}
-	}
-	}
-	out.println("</div>");
-	out.println("</div>");
-	out.println("<hr>");
-%>
 
-<%-- JAVA CODE TO DISPLAY AUTHOR PAGE. --%>
+<%-- JAVA CODE TO DISPLAY BOOK PAGE. --%>
 <%
 try{
 	Class.forName("com.mysql.jdbc.Driver").newInstance();

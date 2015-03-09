@@ -34,7 +34,6 @@ try{
 	}
 	
 	if(session.getAttribute("user") == null && session.getAttribute("admin") == null){
-		out.println("<label>You are not logged in</label>");
 	}
 	else
 	{
@@ -48,14 +47,11 @@ try{
 	
 	if(userName == null)
 	{
-		out.println("<label>You are not logged in</label>");
 	}
 	else
 	{
 	int id = Integer.parseInt(session.getAttribute("id").toString());
-	out.println("<label>You are logged in as "+userName+"</label>");
 
-	out.println("<form method='POST' action='logout.jsp'><input type='hidden' value='true' name='logout'><button type='submit' class='btn btn-default'>Logout</button></form>");
 	out.println("</div>");
 	out.println("<div class='col-sm-4 col-sm-push-4 text-right'>");
 	if(Integer.parseInt(session.getAttribute("id").toString()) == author_id)
@@ -67,7 +63,6 @@ try{
 	}
 	out.println("</div>");
 	out.println("</div>");
-	out.println("<hr>");
 
 %>
 

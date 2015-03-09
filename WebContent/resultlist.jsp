@@ -10,33 +10,6 @@
  javax.servlet.http.*,
  javax.servlet.*"%>
  
- <%
-	if(session.getAttribute("user") == null && session.getAttribute("admin") == null){
-		out.println("You are not logged in<BR>");
-	}
-	else
-	{
-	String userName = null;
-	String sessionID = null;
-	Cookie[] cookies = request.getCookies();
-	if(cookies !=null){
-	for(Cookie cookie : cookies){
-	    if(cookie.getName().equals("user") || cookie.getName().equals("admin")) userName = cookie.getValue();
-	}
-	
-	if(userName == null)
-	{
-		out.println("You are not logged in<BR>");
-	}
-	else
-	{
-	out.println("You are logged in as "+userName);
-	out.println("<form method='POST' action='logout.jsp'><input type='hidden' value='true' name='logout'><button type='submit' class='btn btn-default'>Logout</button></form>");
-	}
-	}
-	}
-%>
- 
  <%-- JAVA CODE HERE: WILL DISPLAY RESULTS OF USER'S QUERY --%>
 <%-- 
 	REQUIREMENTS: if user is not an administrator, the page will only display regular functions.
