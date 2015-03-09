@@ -81,6 +81,9 @@ try
 	{
 		throw new SQLException();
 	}
+	
+	connection.close();
+	
 } catch (Exception e)
 {
 	out.println(e);

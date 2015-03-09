@@ -196,6 +196,9 @@ try{
 		//http://localhost:8080/Bookstore/author.jsp?author_id=1
 	} while(rs1.next());
 	}
+	
+	connection.close();
+	
 } catch (Exception e)
 {
 	 System.out.println(e);

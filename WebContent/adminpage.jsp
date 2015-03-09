@@ -192,6 +192,8 @@ try{
 	out.println("</div>");
 	out.println("</div>");
 	
+	connection.close();
+	
 } catch (Exception e)
 {
 	 System.out.println(e);

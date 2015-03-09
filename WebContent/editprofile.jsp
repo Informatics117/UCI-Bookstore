@@ -188,6 +188,9 @@ try{
 	out.println("</table>");
 	
 	}
+	
+	connection.close();
+	
 } catch (Exception e)
 {
 	 System.out.println(e);

@@ -100,6 +100,9 @@ if(request.getMethod().equals("POST") && request.getParameter("first_name") != n
 		
 		response.sendRedirect("/Bookstore/redirect.jsp?message=Account creation successful, your account is pending approval");
 	}
+	
+	connection.close();
+	
 	} catch (Exception e)
 	{
 		out.println(e);

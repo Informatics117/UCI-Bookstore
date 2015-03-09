@@ -44,7 +44,7 @@
 	else
 	{
 	out.println("<li><h4>"+userName+"</h4></li>");
-	out.println("<li><form method='POST' action='logout.jsp'><input type='hidden' value='true' name='logout'><button type='submit' class='btn btn-default'>Logout</button></></li>");
+	out.println("<li><form method='POST' action='logout.jsp'><input type='hidden' value='true' name='logout'><button type='submit' class='btn btn-default'>Logout</button></form></></li>");
 	}
 	}
 	}
@@ -57,7 +57,7 @@
     					<li><a href="splashpage.jsp">Home</a></li>
     					<li><a href="author.jsp">My Page</a></li>
     					<li><a href="search.jsp">Search</a></li>
-    					<li><<a href="submit.jsp">Submit Book</a></li>
+    					<li><a href="submit.jsp">Submit Book</a></li>
     				</ul>
     			</div>
     		</div>
