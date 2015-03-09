@@ -8,9 +8,11 @@
  javax.sql.*,
  java.io.IOException,
  javax.servlet.http.*,
- javax.servlet.*"%>
-
-
+ javax.servlet.*,
+ java.net.*,
+ java.io.*,
+ com.google.gson.*"%>
+ 
 
 <%-- CONTRIBUTION SUBMISSION PAGE --%>
 <form action = "/Bookstore/submit.jsp" METHOD="POST">
@@ -22,12 +24,9 @@ if(session.getAttribute("admin") != null)
 }
 %>
 
-	Book Title*: <INPUT TYPE="TEXT" NAME="book_title" id="book_title"><BR> 
 	ISBN Number*: <INPUT TYPE="TEXT" NAME="ISBN_num" id="ISBN_num"><BR> 
 	Book Price (must be a valid price e.g. 11.99)*: <INPUT TYPE="TEXT" NAME="book_price" id="book_price"><BR>
 	Photo URL*:  <INPUT TYPE="TEXT" NAME="photo_url" id="photo_url"><BR>
-	Publisher*: <INPUT TYPE="TEXT" NAME="publisher" id="publisher"><BR>
-	Description*: <textarea class="form-control" cols="50" rows="5" NAME = "description" id="description"></textarea><BR>
 	
 	<INPUT TYPE="SUBMIT" VALUE="submit contribution" NAME="contribution">
 </FORM>
@@ -52,19 +51,35 @@ if(request.getParameter("contribution") != null)
 		{
 			response.sendRedirect("/Bookstore/redirect.jsp?message=You need to login before you can make a contribution.");
 		}
-		String book_title = request.getParameter("book_title");
+		//String book_title = request.getParameter("book_title");
 		String ISBN_num = request.getParameter("ISBN_num");
 		String book_price = request.getParameter("book_price");
 		String photo_url = request.getParameter("photo_url");
-		String publisher = request.getParameter("publisher");
-		String description = request.getParameter("description");
-		
-		description = description.replaceAll("'", "''");
+		//String publisher = request.getParameter("publisher");
+		//String description = request.getParameter("description");
 		
 		Class.forName("com.mysql.jdbc.Driver").newInstance();
 		Connection connection = DriverManager.getConnection("jdbc:mysql:///" + "bookstoredb","testuser","testpass");
 
-	
+		try{
+		URL url = new URL("https://www.googleapis.com/books/v1/volumes?q=isbn:"+ISBN_num+"");
+		URLConnection conn = url.openConnection();
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		StringBuilder sb = new StringBuilder();
+		String inputLine;
+		while((inputLine = br.readLine()) != null)
+		{
+			sb.append(inputLine);
+		}
+		
+		JsonParser parser = new JsonParser();
+		JsonObject json = (JsonObject) parser.parse(sb.toString());
+		
+		String book_title = (((JsonObject) ((JsonObject) ((JsonArray) json.get("items")).get(0)).get("volumeInfo")).get("title")).toString().replaceAll("\"", "");
+		String description = (((JsonObject) ((JsonObject) ((JsonArray) json.get("items")).get(0)).get("volumeInfo")).get("description")).toString().replaceAll("\"", "");
+		String publisher =  (((JsonObject) ((JsonObject) ((JsonArray) json.get("items")).get(0)).get("volumeInfo")).get("publisher")).toString().replaceAll("\"", "");
+		
 		Statement s = connection.createStatement();
 		
 		
@@ -80,11 +95,15 @@ if(request.getParameter("contribution") != null)
 			s.executeUpdate(query);
 			out.println("Contribution has been added and is pending approval");
 		}
-		
+		} catch (Exception e)
+		{
+			System.out.println(e.toString());
+			out.println("That is not a valid ISBN number");
+		}
 		connection.close();
 	} catch (Exception e)
 	{
-		//out.println(e.toString());
+		System.out.println(e.toString());
 		out.println("Check your submission: You either have an invalid price, or have entered an empty field.");
 	}
 }
