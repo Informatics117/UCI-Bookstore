@@ -120,13 +120,14 @@ _isbn_num VARCHAR(255),
 _book_price DOUBLE,
 _description text,
 _photo_url VARCHAR(255),
-_publisher VARCHAR(255)
+_publisher VARCHAR(255),
+_rating int
 )
 BEGIN
 
 	START TRANSACTION;
 
-	INSERT INTO pending_contributions VALUES(DEFAULT, _user_id, _contribution_name, isbn_num, 0, _book_price, _description, _photo_url, _publisher);
+	INSERT INTO pending_contributions VALUES(DEFAULT, _user_id, _contribution_name, isbn_num, _rating, _book_price, _description, _photo_url, _publisher);
 
 	COMMIT;
 
@@ -139,13 +140,14 @@ _isbn_num VARCHAR(255),
 _book_price DOUBLE,
 _description text,
 _photo_url VARCHAR(255),
-_publisher VARCHAR(255)
+_publisher VARCHAR(255),
+_rating INT
 )
 BEGIN
 
 	START TRANSACTION;
 
-	INSERT INTO contributions VALUES(DEFAULT, _user_id, _contribution_name, isbn_num, 0, _book_price, _description, now(), _photo_url, _publisher);
+	INSERT INTO contributions VALUES(DEFAULT, _user_id, _contribution_name, isbn_num, _rating, _book_price, _description, now(), _photo_url, _publisher);
 
 	COMMIT;
 
