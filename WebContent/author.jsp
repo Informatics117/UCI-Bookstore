@@ -30,7 +30,6 @@ try{
 		}
 	} catch (Exception e)
 	{
-		out.println("<label>Invalid Author ID</label>");
 	}
 	
 	if(session.getAttribute("user") == null && session.getAttribute("admin") == null){
