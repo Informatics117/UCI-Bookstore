@@ -71,14 +71,12 @@ if(request.getParameter("contribution") != null)
 		if(session.getAttribute("admin") != null)
 		{
 			String query = "CALL submit_and_approve('"+user_id+"', '"+book_title+"', '"+ISBN_num+"', '"+book_price+"', '"+description+"', '"+photo_url+"', '"+publisher+"')";
-			System.out.println(query);
 			s.executeUpdate(query);
 			out.println("Contribution has been added and approved.");
 		}
 		else
 		{
 			String query = "CALL submit_contribution('"+id+"', '"+book_title+"', '"+ISBN_num+"', '"+book_price+"', '"+description+"', '"+photo_url+"', '"+publisher+"')";
-			System.out.println(query);
 			s.executeUpdate(query);
 			out.println("Contribution has been added and is pending approval");
 		}
