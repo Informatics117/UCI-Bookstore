@@ -64,7 +64,7 @@ try{
 	
 	if(rs1 == null || !rs1.first())
 	{
-		out.println("No Reviews found for this book");
+		out.println("No Reviews found for this book<BR><BR>");
 	}
 	else
 	{
@@ -82,7 +82,10 @@ try{
 		}
 		while(rs1.next());
 	}
+	
+
 	connection.close();
+
 } catch (Exception e)
 {
 	 System.out.println(e);

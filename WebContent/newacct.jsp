@@ -42,7 +42,7 @@ javax.servlet.*"%>
 						<input type="text" class="form-control" name="affiliation" id="affiliation" placeholder = "e.g. Student">
 					</div>
 					<div class="form-group">
-						<label for="last">Department: </label>
+						<label for="last">Department*: </label>
 						<input type="text" class="form-control" name="department" id="department" placeholder = "e.g. Engineering">
 					</div>
 					<div class="form-group">

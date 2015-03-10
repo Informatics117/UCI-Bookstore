@@ -16,6 +16,11 @@
 	<%
 try{
 	
+	if(session.getAttribute("admin") != null)
+	{
+		response.setHeader("Refresh", "0;url=/Bookstore/adminpage.jsp");
+	}
+	
 	int author_id = -1;
 	out.println("<div class='row'>");
 	out.println("<div class='col-sm-4'>");
@@ -195,7 +200,7 @@ try{
 	
 } catch (Exception e)
 {
-	 System.out.println(e);
+	
 }
 %>
 	</div>
