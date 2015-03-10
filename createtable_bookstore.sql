@@ -111,6 +111,15 @@ CREATE TABLE administrators
     PRIMARY KEY(id)
 );
 
+
+CREATE TABLE news_feed
+(
+	id int NOT NULL AUTO_INCREMENT,
+    news text,
+    PRIMARY KEY(id)
+);
+
+
 DELIMITER $$
 
 CREATE PROCEDURE add_review(
@@ -345,5 +354,9 @@ INSERT INTO reviews VALUES(DEFAULT, 25, 3, 2,'The book is terrible too many clic
 INSERT INTO reviews VALUES(DEFAULT, 29, 7, 4,'My first time reading a book from this author. It is a smoothly flowing and fascinating story of a young man who succumbs to the most base desire, and the impact this has both psychologically and otherwise on himself and those around him.', now());
 INSERT INTO reviews VALUES(DEFAULT, 29, 5, 2,'boring boring boring...', now());
 INSERT INTO reviews VALUES(DEFAULT, 29, 6, 3,'THIS BOOK NEEDS TO BE TRANSLATED PROPERLY!! IT\'S SO HARD TO READ!!!', now());
+
+INSERT INTO news_feed VALUES(DEFAULT, "We will be having an autograph event with J.K. Rowling at the UCI Bookstore! It will begin at 7p.m.");
+INSERT INTO news_feed VALUES(DEFAULT, "We will be having a meet and greet with our renown author Professor Haywitch @ 5p.m.");
+INSERT INTO news_feed VALUES(DEFAULT, "Free UCI author book giveways at the front of Starbucks @ 2p.m. Come while supplies last!");
 
 INSERT INTO administrators VALUES(1, 'Steve', 'Carter', 'steve@uci.edu', 'carter', 29, 8);

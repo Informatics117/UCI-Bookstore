@@ -109,7 +109,8 @@ try{
 			out.println("<div class='col-sm-4'>");
 			out.println("<img src='"+bioInfo.getString(4)+"' width='75%'/>");
 			%>
-			
+			<!-- Intended blank space (paragraph) so picture doesn't cover border -->
+			<p> </p>
 		  <div class="btn-group" role="group" style="width:100%">
 		  <a class="twitter-share-button, btn btn-default" href="https://twitter.com/share" type="button" style="width:50%"> Tweet</a>
 		  <script>

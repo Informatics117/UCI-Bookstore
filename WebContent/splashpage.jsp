@@ -19,34 +19,46 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
   <style>
+  .carousel-inner { 
+  	padding-bottom: 120px; 
+  }
+  .carousel-caption { 
+	bottom:-100px; 
+  }
   .carousel-inner > .item > img,
   .carousel-inner > .item > a > img {
       width: 25%;
       margin: auto;
       height: 350px;
   }
+  .carousel-indicator {
+  	padding-top: 100px;
+  }
+  .carousel-indicators li {
+  	background-color: black;
+  }
   </style>
 
 </head>
 <body>
 	<div class="container">
-	<br>
+		<br>
 
-<div id="myCarousel" class="carousel slide" data-ride="carousel">
-  <!-- Indicators -->
-  <ol class="carousel-indicators">
-    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-    <li data-target="#myCarousel" data-slide-to="1"></li>
-    <li data-target="#myCarousel" data-slide-to="2"></li>
-    <li data-target="#myCarousel" data-slide-to="3"></li>
-    <li data-target="#myCarousel" data-slide-to="4"></li>
-  </ol>
+		<div id="myCarousel" class="carousel slide" data-ride="carousel">
+			<!-- Indicators -->
+			<ol class="carousel-indicators">
+				<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+				<li data-target="#myCarousel" data-slide-to="1"></li>
+				<li data-target="#myCarousel" data-slide-to="2"></li>
+				<li data-target="#myCarousel" data-slide-to="3"></li>
+				<li data-target="#myCarousel" data-slide-to="4"></li>
+			</ol>
 
-  <!-- Wrapper for slides -->
-  <div class="carousel-inner" role="listbox">
-  	<div class="item active">
-	
-<%
+			<!-- Wrapper for slides -->
+			<div class="carousel-inner" role="listbox">
+				<div class="item active">
+
+					<%
 try{
 	String email = request.getParameter("username");
 	String password = request.getParameter("password");
@@ -90,13 +102,21 @@ try{
 %>
 </div>
 </div>
-
-<hr>
-<div class='row'>
-	<h4>Recent Reviews</h4>
 </div>
-<div class="container">
+</div>
+<hr>
+<div class = "container">
+<div class='row'>
+<div class="col-sm-6">
+	<h4>Recent Reviews</h4>
 <div id="myCarousel1" class="carousel slide" data-interval="false">
+<ol class="carousel-indicators">
+				<li data-target="#myCarousel1" data-slide-to="0" class="active"></li>
+				<li data-target="#myCarousel1" data-slide-to="1"></li>
+				<li data-target="#myCarousel1" data-slide-to="2"></li>
+				<li data-target="#myCarousel1" data-slide-to="3"></li>
+				<li data-target="#myCarousel1" data-slide-to="4"></li>
+			</ol>
 	<div class="carousel-inner">
 		<div class="item active">
 
@@ -124,26 +144,29 @@ try{
 			out.println("</div>");
 			} 
 	}	
-	
-}
- 	catch (Exception e)
-{
-	out.println(e);
-}
 %>
 	</div>
-		<!-- Controls -->
-	<a class="left carousel-control" href="#myCarousel1" role="button" data-slide="prev">
-			<span class="glyphicon glyphicon-chevron-left"></span>
-	</a>
-
-	<a class="right carousel-control" href="#myCarousel1" role="button" data-slide="next">
-			<span class="glyphicon glyphicon-chevron-right"></span>
-	</a>
-
 </div>
 </div>
-<hr>
+</div>
+<div class="col-sm-6">
+<h4>News Feed</h4>
+<%
+	Statement statement = connection.createStatement();
+	ResultSet result = statement.executeQuery("SELECT * from news_feed");
+
+	if (result == null || !result.first()) {
+			out.println("<h4> There are no news to show right now. </h4>");
+	} else {
+			while (result.next()) {
+				out.println("<p>" + result.getString(2) + "</p>");
+			}
+	}
+} catch (Exception e) {
+		out.println(e);
+}
+%>
+</div>
 </div>
 </div>
 </body>
