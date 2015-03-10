@@ -178,7 +178,7 @@ BEGIN
 
 	SELECT first_name, last_name, email, password, affiliation, department, class, school FROM pending_users 
     WHERE id = _user_id INTO @first_name, @last_name, @email, @password, @affiliation, @department, @class, @school;
-	INSERT INTO users VALUES (DEFAULT, @first_name, @last_name, @email, @password, @affiliation, @department, @class, @school);
+	INSERT INTO users VALUES (DEFAULT, @first_name, @last_name, @email, @password, 0, @affiliation, @department, @class, @school);
 	DELETE FROM pending_users WHERE id = _user_id;
 
 	COMMIT;
