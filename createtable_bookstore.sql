@@ -113,6 +113,22 @@ CREATE TABLE administrators
 
 DELIMITER $$
 
+CREATE PROCEDURE add_review(
+_contribution_id int,
+_poster_id int,
+_review_text text
+)
+BEGIN
+
+	START TRANSACTION;
+
+	INSERT INTO pending_reviews VALUES (DEFAULT, _contribution_id, _poster_id, 0, _review_text);
+
+	COMMIT;
+
+END $$
+
+
 CREATE PROCEDURE submit_contribution(
 _user_id INT,
 _contribution_name VARCHAR(255),
