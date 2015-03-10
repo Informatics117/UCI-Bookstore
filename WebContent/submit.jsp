@@ -79,19 +79,20 @@ if(request.getParameter("contribution") != null)
 		String book_title = (((JsonObject) ((JsonObject) ((JsonArray) json.get("items")).get(0)).get("volumeInfo")).get("title")).toString().replaceAll("\"", "");
 		String description = (((JsonObject) ((JsonObject) ((JsonArray) json.get("items")).get(0)).get("volumeInfo")).get("description")).toString().replaceAll("\"", "");
 		String publisher =  (((JsonObject) ((JsonObject) ((JsonArray) json.get("items")).get(0)).get("volumeInfo")).get("publisher")).toString().replaceAll("\"", "");
+		String rating = (((JsonObject) ((JsonObject) ((JsonArray) json.get("items")).get(0)).get("volumeInfo")).get("averageRating")).toString().replaceAll("\"", "");
 		
 		Statement s = connection.createStatement();
 		
 		
 		if(session.getAttribute("admin") != null)
 		{
-			String query = "CALL submit_and_approve('"+user_id+"', '"+book_title+"', '"+ISBN_num+"', '"+book_price+"', '"+description+"', '"+photo_url+"', '"+publisher+"')";
+			String query = "CALL submit_and_approve('"+user_id+"', '"+book_title+"', '"+ISBN_num+"', '"+book_price+"', '"+description+"', '"+photo_url+"', '"+publisher+"', '"+rating+"')";
 			s.executeUpdate(query);
 			out.println("Contribution has been added and approved.");
 		}
 		else
 		{
-			String query = "CALL submit_contribution('"+id+"', '"+book_title+"', '"+ISBN_num+"', '"+book_price+"', '"+description+"', '"+photo_url+"', '"+publisher+"')";
+			String query = "CALL submit_contribution('"+id+"', '"+book_title+"', '"+ISBN_num+"', '"+book_price+"', '"+description+"', '"+photo_url+"', '"+publisher+"', '"+rating+"')";
 			s.executeUpdate(query);
 			out.println("Contribution has been added and is pending approval");
 		}
