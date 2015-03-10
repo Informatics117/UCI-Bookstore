@@ -28,6 +28,19 @@ try{
 		out.println("<h2>Invalid Author ID</h2>");
 	}
 	
+	String rating = request.getParameter("rating");
+	String review = request.getParameter("review");
+	int user_id = Integer.parseInt(session.getAttribute("id").toString());
+	
+	if(rating != null && review != null)
+	{
+		String query = "INSERT INTO pending_reviews VALUES (DEFAULT, '"+book_id+"', '"+user_id+"', '"+rating+"', '"+review+"')";
+		Statement submitreview = connection.createStatement();
+		submitreview.executeUpdate(query);
+		out.println("Review has been submitted and is pending approval.");
+	}
+	
+	
 	String getBook = "SELECT * FROM contributions JOIN users on users.id = contributions.user_id where contributions.id = '"+book_id+"'";
 	Statement s = connection.createStatement();
 	ResultSet rs = s.executeQuery(getBook);
@@ -103,7 +116,7 @@ try{
 		{
 			out.println("<div class='row'>");
 			out.println("<div class='col-sm-3'>");
-			out.println("<p>Poster ID: "+rs1.getInt(3)+ "</p>");
+			out.println("<p>Poster ID: "+rs1.getInt(3)+ "<BR> Rating: "+rs1.getInt(4)+"</p>");
 			out.println("</div>");
 			out.println("<div class='col-sm-9'>");
 			out.println("<p>" + rs1.getString(5)+ "</p>");
@@ -115,7 +128,30 @@ try{
 	
 
 	connection.close();
+%>
+	
+	<form method="GET" action = "book.jsp">
+            <div class="form-group">
+               <select name="rating">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+  			</select>
+            </div>
+            <div class="form-group">
+                <label for="review"></label>
+               <textarea name="review" class="form-control" cols="50" rows="5" id="inf" placeholder="Enter a review here"></textarea>
+            </div>
+     
+	
 
+<% 
+	out.println("<input type='hidden' name='book_id' value='"+book_id+"'>");
+	out.println(" <button type='submit' class='btn btn-primary'>Submit Review</button>");
+	out.println("</form>");
+	out.println("</form>");
 } catch (Exception e)
 {
 	 System.out.println(e);
