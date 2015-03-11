@@ -18,6 +18,16 @@
 <form action = "/Bookstore/submit.jsp" METHOD="POST">
 
 <%
+
+if(session.getAttribute("id") == null && session.getAttribute("admin") == null)
+{
+	out.println("You must be logged in to use this feature");
+}
+else
+{
+%>
+
+<%
 if(session.getAttribute("admin") != null)
 {
 	out.println("AUTHOR's ID*: <INPUT TYPE='TEXT' NAME='user_id' id='user_id'><BR>");
@@ -107,5 +117,6 @@ if(request.getParameter("contribution") != null)
 		System.out.println(e.toString());
 		out.println("Check your submission: You either have an invalid price, or have entered an empty field.");
 	}
+}
 }
 %>
