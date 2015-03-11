@@ -37,6 +37,12 @@
   .carousel-indicators li {
   	background-color: black;
   }
+  .carousel-control.left {
+  	background-image: none;
+  }
+  .carousel-control.right {
+  	background-image: none;
+  }
   </style>
 
 </head>
@@ -108,15 +114,8 @@ try{
 <div class = "container">
 <div class='row'>
 <div class="col-sm-6">
-	<h4>Recent Reviews</h4>
+	<h3>Recent Reviews</h3>
 <div id="myCarousel1" class="carousel slide" data-interval="false">
-<ol class="carousel-indicators">
-				<li data-target="#myCarousel1" data-slide-to="0" class="active"></li>
-				<li data-target="#myCarousel1" data-slide-to="1"></li>
-				<li data-target="#myCarousel1" data-slide-to="2"></li>
-				<li data-target="#myCarousel1" data-slide-to="3"></li>
-				<li data-target="#myCarousel1" data-slide-to="4"></li>
-			</ol>
 	<div class="carousel-inner">
 		<div class="item active">
 
@@ -124,33 +123,36 @@ try{
 	Statement s = connection.createStatement();
 	ResultSet rs = s.executeQuery("SELECT * from reviews JOIN contributions on contributions.id = reviews.contribution_id ORDER BY reviews.ts DESC LIMIT 5");
 	
-	//out.println("<div class='row'>");
-	//out.println("<h4>Recent Reviews</h4>");
 	if(rs == null || !rs.first())
 	{
 		out.println("<h4>No recent reviews. </h4>");
 	}
 	else
 	{
-			//out.println("<div class='row admin-row'>");
 			out.println("<p class='admin-p text-center carousel-review-link'><a href = '/Bookstore/book.jsp?book_id="+rs.getInt(4)+"'>"+ rs.getString(9) + "</a></p>");
 			out.println("<p class='admin-p carousel-text'>"+rs.getString(5) + "</p>");
 			out.println("</div>");
 		while(rs.next()) {
 			out.println("<div class='item'>");
-			//out.println("<div class='row admin-row'>");
 			out.println("<p class='admin-p  text-center carousel-review-link'><a href = '/Bookstore/book.jsp?book_id="+rs.getInt(4)+"'>"+ rs.getString(9) + "</a></p>");
 			out.println("<p class='admin-p carousel-text'>"+rs.getString(5) + "</p>");
 			out.println("</div>");
-			} 
+		} 
 	}	
 %>
 	</div>
-</div>
+	<!-- Controls -->
+	<a class="left carousel-control" href="#myCarousel1" role="button" data-slide="prev">
+			<span class="glyphicon glyphicon-circle-arrow-left"></span>
+	</a>
+
+	<a class="right carousel-control" href="#myCarousel1" role="button" data-slide="next">
+			<span class="glyphicon glyphicon-circle-arrow-right"></span>
+	</a>
 </div>
 </div>
 <div class="col-sm-6">
-<h4>News Feed</h4>
+<h3>News Feed</h3>
 <%
 	Statement statement = connection.createStatement();
 	ResultSet result = statement.executeQuery("SELECT * from news_feed");
@@ -158,9 +160,9 @@ try{
 	if (result == null || !result.first()) {
 			out.println("<h4> There are no news to show right now. </h4>");
 	} else {
-			while (result.next()) {
+			do {
 				out.println("<p>" + result.getString(2) + "</p>");
-			}
+			}while(result.next());
 	}
 } catch (Exception e) {
 		out.println(e);
@@ -169,4 +171,10 @@ try{
 </div>
 </div>
 </div>
+
+<br>
+<br>
+<br>
+
+<hr>
 </body>

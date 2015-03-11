@@ -54,6 +54,7 @@
     			<div class="navbar-left">
     				<ul class="nav navbar-nav">
     					<!-- link this to the authors personal page -->
+    					<li> <b>The Authors</b><li>
     					<li><a href="splashpage.jsp">Home</a></li>
     					<li><a href="author.jsp">My Page</a></li>
     					<li><a href="search.jsp">Search</a></li>
@@ -62,4 +63,3 @@
     			</div>
     		</div>
     	</nav>
-		<div class="container">
