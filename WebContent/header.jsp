@@ -23,6 +23,7 @@
 		
 		//<button type="button"><a href="yourlink.com">Link link</a></button>
         out.println("<li><form action='/Bookstore/newacct.jsp'><input type = 'submit' class='btn btn-default' value = 'Create an Account'></form></li>");
+		out.println("<li><form action='/Bookstore/login.jsp'><input type = 'submit' class='btn btn-default' value = 'Login'></form></li>");
 	}
 	else
 	{
