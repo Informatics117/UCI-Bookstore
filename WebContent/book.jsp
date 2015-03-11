@@ -37,7 +37,7 @@ try{
 		String query = "INSERT INTO pending_reviews VALUES (DEFAULT, '"+book_id+"', '"+user_id+"', '"+rating+"', '"+review+"')";
 		Statement submitreview = connection.createStatement();
 		submitreview.executeUpdate(query);
-		out.println("Review has been submitted and is pending approval.");
+		out.println("<font color='red'>Review has been submitted and is pending approval.</font>");
 	}
 	
 	

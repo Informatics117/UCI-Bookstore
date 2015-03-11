@@ -155,7 +155,7 @@ try{
 <h3>News Feed</h3>
 <%
 	Statement statement = connection.createStatement();
-	ResultSet result = statement.executeQuery("SELECT * from news_feed");
+	ResultSet result = statement.executeQuery("SELECT * from news_feed ORDER BY id DESC LIMIT 3");
 
 	if (result == null || !result.first()) {
 			out.println("<h4> There are no news to show right now. </h4>");

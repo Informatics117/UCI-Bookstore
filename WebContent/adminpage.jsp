@@ -52,6 +52,14 @@ try{
 	Class.forName("com.mysql.jdbc.Driver").newInstance();
 	Connection connection = DriverManager.getConnection("jdbc:mysql:///" + "bookstoredb","testuser","testpass");
 
+	String news = request.getParameter("news");
+	if(news != null)
+	{
+		String query = "INSERT INTO news_feed VALUES (DEFAULT, '" + news + "')";
+		Statement submitNews = connection.createStatement();
+		submitNews.executeUpdate(query);
+		out.println("<font color='red'>News has been submitted.</font>");
+	}
 	
 	String review_id = request.getParameter("review_id");
 	String contribution_id = request.getParameter("contribution_id");
@@ -193,6 +201,19 @@ try{
 	out.println("</div>");
 	
 	connection.close();
+	
+%>
+
+<hr>
+<form method="GET" action = "adminpage.jsp">
+            <div class="form-group">
+                <label for="news"></label>
+               <textarea name="news" class="form-control" cols="50" rows="5" id="inf" placeholder="Enter news here"></textarea>
+            </div>	
+	
+<% 
+out.println("<button type='submit' class='btn btn-primary'>Submit </button>");
+out.println("</form>");
 	
 } catch (Exception e)
 {
