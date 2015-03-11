@@ -45,7 +45,7 @@
   }
   td:nth-child(2) {
     padding-right: 20px;
-}​​
+  }​	​
   </style>
 
 </head>
@@ -170,8 +170,9 @@ try{
 				out.println("<td></td>");
 				out.println("<td>" + result.getString(2) + "</td>");
 				out.println("<tr>");
+
 			}while(result.next());
-			
+
 			out.println("</table>");
 	}
 } catch (Exception e) {
@@ -181,10 +182,5 @@ try{
 </div>
 </div>
 </div>
-
-<br>
-<br>
-<br>
-
 <hr>
 </body>

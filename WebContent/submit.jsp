@@ -15,13 +15,19 @@
  
 
 <%-- CONTRIBUTION SUBMISSION PAGE --%>
-<form action = "/Bookstore/submit.jsp" METHOD="POST">
+<div class="container">
+<div class="row">
+	<h2>Submit a Contribution</h2>
+</div>
+<div class="row">
+	<div class="col-sm-4 col-sm-offset-4">
+		<form action = "/Bookstore/submit.jsp" METHOD="POST">
 
 <%
 
 if(session.getAttribute("id") == null && session.getAttribute("admin") == null)
 {
-	out.println("You must be logged in to use this feature");
+	out.println("<h4>You must be logged in to use this feature</h4>");
 }
 else
 {
@@ -30,16 +36,30 @@ else
 <%
 if(session.getAttribute("admin") != null)
 {
-	out.println("AUTHOR's ID*: <INPUT TYPE='TEXT' NAME='user_id' id='user_id'><BR>");
+	out.println("<div class='form-group'>");
+	out.println("<label for='user_id'>Author's ID*: </label>");
+	out.println("<input class='form-control' TYPE='TEXT' NAME='user_id' id='user_id'>");
+	out.println("</div>");
 }
 %>
 
-	ISBN Number*: <INPUT TYPE="TEXT" NAME="ISBN_num" id="ISBN_num"><BR> 
-	Book Price (must be a valid price e.g. 11.99)*: <INPUT TYPE="TEXT" NAME="book_price" id="book_price"><BR>
-	Photo URL*:  <INPUT TYPE="TEXT" NAME="photo_url" id="photo_url"><BR>
+	<div class="form-group">
+		<label for="ISBN_num">ISBN Number*: </label>
+		<INPUT class="form-control" TYPE="TEXT" NAME="ISBN_num" id="ISBN_num"> 
+	</div>
+	<div class="form-group">
+		<label for="book_price">Book Price(must be a valid price e.g. 11.99)*: </label>
+		<INPUT class="form-control" TYPE="TEXT" NAME="book_price" id="book_price">
+	</div>
+	<div class="form-group">
+		<label for="photo_url">Photo URL*: </label>
+		<INPUT class="form-control" TYPE="TEXT" NAME="photo_url" id="photo_url">
+	</div>
 	
-	<INPUT TYPE="SUBMIT" VALUE="submit contribution" NAME="contribution">
-</FORM>
+	<button TYPE="SUBMIT" class="btn btn-primary" NAME="contribution">Submit Contribution</button>
+		</form>
+	</div>
+</div>
 
 <%-- CONTRIBUTION SUBMISSION PAGE --%>
 

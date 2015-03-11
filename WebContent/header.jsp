@@ -22,8 +22,7 @@
 	if(session.getAttribute("user") == null && session.getAttribute("admin") == null){
 		
 		//<button type="button"><a href="yourlink.com">Link link</a></button>
-		out.println("<li><form action='/Bookstore/newacct.jsp'><input type = 'submit' class='btn btn-default' value = 'Create an Account'></form></li>");
-		out.println("<li><form action='/Bookstore/login.jsp'><input type = 'submit' class='btn btn-default' value = 'Login'></form></li>");
+        out.println("<li><form action='/Bookstore/newacct.jsp'><input type = 'submit' class='btn btn-default' value = 'Create an Account'></form></li>");
 	}
 	else
 	{
@@ -36,14 +35,13 @@
 	    if(cookie.getName().equals("user") || cookie.getName().equals("admin")) userName = cookie.getValue();
 	}
 	
-	if (session.getAttribute("admin") != null)
-	{
-		out.println("<li><form action='/Bookstore/admincreationpage.jsp'><input type = 'submit' class='btn btn-default' value = 'Create an Admin Account'></form></li>");
-	}
-
+    if (session.getAttribute("admin") != null)
+    {
+        out.println("<li><form action='/Bookstore/admincreationpage.jsp'><input type = 'submit' class='btn btn-default' value = 'Create an Admin Account'></form></li>");
+    }
 	if(userName == null)
 	{
-		out.println("<li><form action='/Bookstore/newacct.jsp'><input type = 'submit' class='btn btn-default' value = 'Create an Account'></form></li>");
+        out.println("<li><form action='/Bookstore/newacct.jsp'><input type = 'submit' class='btn btn-default' value = 'Create an Account'></form></li>");
 		out.println("<li><form action='/Bookstore/login.jsp'><input type = 'submit' class='btn btn-default' value = 'Login'></form></li>");
 	}
 	else
@@ -59,7 +57,7 @@
     			<div class="navbar-left">
     				<ul class="nav navbar-nav">
     					<!-- link this to the authors personal page -->
-    					<li> <font size="18"><b>The Authors</b> </font><li>
+    					<li> <h4>The Authors</h4><li>
     					<li><a href="splashpage.jsp">Home</a></li>
     					<li><a href="author.jsp">My Page</a></li>
     					<li><a href="search.jsp">Search</a></li>
