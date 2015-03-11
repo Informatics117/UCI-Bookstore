@@ -16,15 +16,32 @@ if(session.getAttribute("admin") == null)
 	response.sendRedirect("/Bookstore/redirect.jsp?message=You are not an admin!");
 }
 %>
-
- <form action = "/Bookstore/admincreationpage.jsp" METHOD="POST">
-	ALL FIELDS CANNOT BE EMPTY. <BR>
- 	First Name: <INPUT TYPE="TEXT" NAME="first_name" id="first_name"><BR> 
- 	Last Name: <INPUT TYPE="TEXT" NAME="last_name" id="last_name"><BR>
- 	Email:  <INPUT TYPE="TEXT" NAME="email" id="email"><BR>
- 	Password:  <INPUT TYPE="password" NAME="pass" id="pass"><BR>
- 	<INPUT TYPE="SUBMIT" VALUE="Add Administrator" NAME="Add Administrator">
- </FORM>
+<div class="container">
+<div class="row">
+	<h2>Submit a Contribution</h2>
+</div>
+<div class="row">
+	<div class="col-sm-4 col-sm-offset-4">
+ 		<form action = "/Bookstore/admincreationpage.jsp" METHOD="POST">
+ 			<h4>ALL FIELDS CANNOT BE EMPTY. </h4>
+ 			<div class="form-group">
+ 				<label for="first_name">First Name: </label>
+ 				<INPUT class="form-control" TYPE="TEXT" NAME="first_name" id="first_name">
+ 			</div>
+ 			<div class="form-group">
+ 				<label for="last_name">Last Name: </label>
+ 				<INPUT class="form-control" TYPE="TEXT" NAME="last_name" id="last_name">
+ 			</div>
+ 			<div class="form-group">
+ 				<label for="email">Email: </label>
+ 				<INPUT class="form-control" TYPE="TEXT" NAME="email" id="email">
+ 			</div>
+ 			<div class="form-group">
+ 				<label for="pass">Password: </label>
+ 				<INPUT class="form-control" TYPE="password" NAME="pass" id="pass">
+ 			</div>
+			<Button TYPE="SUBMIT" class="btn btn-primary" NAME="Add Administrator">Add Administrator</Button>
+ 		</form>
 
 <%
 try{
