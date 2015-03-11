@@ -56,7 +56,7 @@ if(session.getAttribute("admin") != null)
 		<INPUT class="form-control" TYPE="TEXT" NAME="photo_url" id="photo_url">
 	</div>
 	
-	<button TYPE="SUBMIT" class="btn btn-primary" NAME="contribution">Submit Contribution</button>
+	<INPUT TYPE="SUBMIT" VALUE="submit contribution" NAME="contribution">
 		</form>
 	</div>
 </div>
