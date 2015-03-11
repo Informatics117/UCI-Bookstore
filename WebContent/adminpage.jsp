@@ -54,7 +54,7 @@ try{
 	String news = request.getParameter("news");
 	if(news != null)
 	{
-		String query = "INSERT INTO news_feed VALUES (DEFAULT, '" + news + "')";
+		String query = "INSERT INTO news_feed VALUES (DEFAULT, '" + news + "', CURDATE())";
 		Statement submitNews = connection.createStatement();
 		submitNews.executeUpdate(query);
 		out.println("<font color='red'>News has been submitted.</font>");

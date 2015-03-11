@@ -43,6 +43,9 @@
   .carousel-control.right {
   	background-image: none;
   }
+  td:nth-child(2) {
+    padding-right: 20px;
+}​​
   </style>
 
 </head>
@@ -160,9 +163,16 @@ try{
 	if (result == null || !result.first()) {
 			out.println("<h4> There are no news to show right now. </h4>");
 	} else {
+			out.println("<table>");
 			do {
-				out.println("<p>" + result.getString(2) + "</p>");
+				out.println("<tr>");
+				out.println("<td>" + result.getString(3) + "</td>"); 
+				out.println("<td></td>");
+				out.println("<td>" + result.getString(2) + "</td>");
+				out.println("<tr>");
 			}while(result.next());
+			
+			out.println("</table>");
 	}
 } catch (Exception e) {
 		out.println(e);

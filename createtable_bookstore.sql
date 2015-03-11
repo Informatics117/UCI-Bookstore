@@ -116,6 +116,7 @@ CREATE TABLE news_feed
 (
 	id int NOT NULL AUTO_INCREMENT,
     news text,
+    today date,
     PRIMARY KEY(id)
 );
 
@@ -355,8 +356,8 @@ INSERT INTO reviews VALUES(DEFAULT, 29, 7, 4,'My first time reading a book from 
 INSERT INTO reviews VALUES(DEFAULT, 29, 5, 2,'boring boring boring...', now());
 INSERT INTO reviews VALUES(DEFAULT, 29, 6, 3,'THIS BOOK NEEDS TO BE TRANSLATED PROPERLY!! IT\'S SO HARD TO READ!!!', now());
 
-INSERT INTO news_feed VALUES(DEFAULT, "We will be having an autograph event with J.K. Rowling at the UCI Bookstore! It will begin at 7p.m.");
-INSERT INTO news_feed VALUES(DEFAULT, "We will be having a meet and greet with our renown author Professor Haywitch @ 5p.m.");
-INSERT INTO news_feed VALUES(DEFAULT, "Free UCI author book giveways at the front of Starbucks @ 2p.m. Come while supplies last!");
+INSERT INTO news_feed VALUES(DEFAULT, "We will be having an autograph event with J.K. Rowling at the UCI Bookstore! It will begin at 7p.m.", 20150130);
+INSERT INTO news_feed VALUES(DEFAULT, "We will be having a meet and greet with our renown author Professor Haywitch @ 5p.m.", 20150205);
+INSERT INTO news_feed VALUES(DEFAULT, "Free UCI author book giveways at the front of Starbucks @ 2p.m. Come while supplies last!", CURDATE());
 
 INSERT INTO administrators VALUES(1, 'Steve', 'Carter', 'steve@uci.edu', 'carter', 29, 8);
