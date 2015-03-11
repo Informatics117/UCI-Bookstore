@@ -30,8 +30,15 @@ try{
 	
 	String rating = request.getParameter("rating");
 	String review = request.getParameter("review");
-	int user_id = Integer.parseInt(session.getAttribute("id").toString());
-	
+
+	int user_id = 0;
+	try{
+		user_id = Integer.parseInt(session.getAttribute("id").toString());
+	} catch (Exception e)
+	{
+		out.println("");
+	}
+
 	if(rating != null && review != null)
 	{
 		String query = "INSERT INTO pending_reviews VALUES (DEFAULT, '"+book_id+"', '"+user_id+"', '"+rating+"', '"+review+"')";
