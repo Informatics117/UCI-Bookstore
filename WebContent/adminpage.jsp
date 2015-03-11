@@ -45,7 +45,6 @@ try{
 	out.println("<div class='row'>");
 	out.println("<div class='col-sm-4'>");
 	out.println("Welcome, "+userName);
-	out.println("<form method='POST' action='logout.jsp'><input type='hidden' value='true' name='logout'><button type='submit' class='btn btn-default'>Logout</button></form>");
 	out.println("</div>");
 	}
 	
