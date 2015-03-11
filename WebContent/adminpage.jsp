@@ -207,7 +207,7 @@ try{
 <form method="GET" action = "adminpage.jsp">
             <div class="form-group">
                 <label for="news"></label>
-               <textarea name="news" class="form-control" cols="50" rows="5" id="inf" placeholder="Enter news here"></textarea>
+               <textarea name="news" class="form-control" cols="50" rows="5" id="inf" placeholder="Write a news entry here"></textarea>
             </div>	
 	
 <% 

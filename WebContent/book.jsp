@@ -38,13 +38,24 @@ try{
 	{
 		out.println("");
 	}
-
+	
 	if(rating != null && review != null)
 	{
-		String query = "INSERT INTO pending_reviews VALUES (DEFAULT, '"+book_id+"', '"+user_id+"', '"+rating+"', '"+review+"')";
-		Statement submitreview = connection.createStatement();
-		submitreview.executeUpdate(query);
-		out.println("<font color='red'>Review has been submitted and is pending approval.</font>");
+		if(session.getAttribute("user") == null && session.getAttribute("admin") == null)
+		{
+			out.println("<p> <font color = 'red'> Please login to write a review. </font> </p>");
+		}
+		else if(session.getAttribute("admin") != null)
+		{
+			out.println("<p> <font color = 'red'> An admin cannot write a review. Please login as a user. </font> </p>");
+		}
+		else
+		{
+			String query = "INSERT INTO pending_reviews VALUES (DEFAULT, '"+book_id+"', '"+user_id+"', '"+rating+"', '"+review+"')";
+			Statement submitreview = connection.createStatement();
+			submitreview.executeUpdate(query);
+			out.println("<font color='red'>Review has been submitted and is pending approval.</font>");	
+		}
 	}
 	
 	
@@ -137,6 +148,7 @@ try{
 	connection.close();
 %>
 	
+	<p> Rate the book </p>
 	<form method="GET" action = "book.jsp">
             <div class="form-group">
                <select name="rating">
@@ -149,7 +161,7 @@ try{
             </div>
             <div class="form-group">
                 <label for="review"></label>
-               <textarea name="review" class="form-control" cols="50" rows="5" id="inf" placeholder="Enter a review here"></textarea>
+               <textarea name="review" class="form-control" cols="50" rows="5" id="inf" placeholder="Write a review here"></textarea>
             </div>
      
 	
