@@ -166,8 +166,7 @@ try{
 			out.println("<table>");
 			do {
 				out.println("<tr>");
-				out.println("<td>" + result.getString(3) + "</td>"); 
-				out.println("<td></td>");
+				out.println("<td width = '20%'>" + result.getString(3).substring(5, result.getString(3).length()) + "</td>"); 
 				out.println("<td>" + result.getString(2) + "</td>");
 				out.println("<tr>");
 
