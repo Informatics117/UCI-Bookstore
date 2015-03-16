@@ -94,7 +94,7 @@ if(request.getMethod().equals("POST") && request.getParameter("first_name") != n
 	else
 	{
 		String buildQuery = "INSERT INTO pending_users (first_name, last_name, email, password, info, affiliation, department, class, school)"
-				+ " VALUES ('"+first_name+"', '"+last_name+"', '"+email+"', '"+info+"', '"+password+"', '"+affiliation+"', '"+department+"', '"+classof+"', '"+school+"')";
+				+ " VALUES ('"+first_name+"', '"+last_name+"', '"+email+"', '"+password+"', '"+info+"', '"+affiliation+"', '"+department+"', '"+classof+"', '"+school+"')";
 		Statement s1 = connection.createStatement();
 		s1.executeUpdate(buildQuery);
 		
