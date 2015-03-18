@@ -1,3 +1,4 @@
+<%-- Seperate page for when a user clicks edit profile --%>
 <jsp:include page="header.jsp" flush="true">
     <jsp:param name="pageName" value="Edit Profile"/>
 </jsp:include>
@@ -13,7 +14,7 @@
 	<div class="container">
 <%
 try{
-	
+	//Checks if the current user has access rights to edit this author's page
 	int id = 0;
 	out.println("<div class='row'>");
 	out.println("<div class='col-sm-4'>");
@@ -38,7 +39,7 @@ try{
 	for(Cookie cookie : cookies){
 	    if(cookie.getName().equals("user") || cookie.getName().equals("admin")) userName = cookie.getValue();
 	}
-	
+	//Once finished, you can click the return to profile link to go back to that author's page
 	if(userName == null)
 	{
 	}
@@ -57,6 +58,7 @@ try{
 %>
 
 <%
+	//Connect to the database and grab the information that's currently being displayed on the authors page
 	Class.forName("com.mysql.jdbc.Driver").newInstance();
 	Connection connection = DriverManager.getConnection("jdbc:mysql:///" + "bookstoredb","testuser","testpass");
 	
@@ -71,6 +73,8 @@ try{
 	String display_name = request.getParameter("display_name");
 	String info = request.getParameter("info");
 	
+	//If there was something changed from the original content, then execute the change to the database
+	//and display to the user that changes have been made
 	if(edit.length() > 0)
 	{
 		info = info.replaceAll("'", "''");
@@ -108,6 +112,7 @@ try{
 		}
 		else
 		{
+			//Display the current data in form-groups that are changeable by the user
 			out.println("<div class='row edit-row'>");
 			out.println("<form method='POST'>");
 			//photo url
@@ -140,6 +145,7 @@ try{
 	Statement s1 = connection.createStatement();
 	ResultSet rs1 = s1.executeQuery(getWorks);
 	
+	//Also display the works that the author has
 	if(rs1 == null || !rs1.first())
 	{
 		out.println("This author has not had any works approved. <BR>");

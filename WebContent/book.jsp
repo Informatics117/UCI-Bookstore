@@ -1,3 +1,4 @@
+<%--Page that displays a book's information --%>
 <jsp:include page="header.jsp" flush="true">
     <jsp:param name="pageName" value="Book"/>
 </jsp:include>
@@ -17,6 +18,7 @@
 <%-- JAVA CODE TO DISPLAY BOOK PAGE. --%>
 <%
 try{
+	//Connects to the database, and looks for the book in the table
 	Class.forName("com.mysql.jdbc.Driver").newInstance();
 	Connection connection = DriverManager.getConnection("jdbc:mysql:///" + "bookstoredb","testuser","testpass");
 	
@@ -28,6 +30,7 @@ try{
 		out.println("<h2>Invalid Author ID</h2>");
 	}
 	
+	//Grabs relevant information to the book
 	String rating = request.getParameter("rating");
 	String review = request.getParameter("review");
 
@@ -38,7 +41,9 @@ try{
 	{
 		out.println("");
 	}
-	
+	//Checkers to see if the user isn't logged in
+	//If the account isn't logged in then one message is displayed, if it's an admin then the message
+	//Says to login as a user, otherwise it'll submit the review to the pending-reviews table
 	if(rating != null && review != null)
 	{
 		if(session.getAttribute("user") == null && session.getAttribute("admin") == null)
@@ -58,7 +63,7 @@ try{
 		}
 	}
 	
-	
+	//Grab additional information about the book, the image and display social media links below the book
 	String getBook = "SELECT * FROM contributions JOIN users on users.id = contributions.user_id where contributions.id = '"+book_id+"'";
 	Statement s = connection.createStatement();
 	ResultSet rs = s.executeQuery(getBook);
@@ -103,6 +108,7 @@ try{
 		</script>
 		</div>
 <%
+		//Html code to display the book info
 		out.println("</div>");
 		out.println("<div class='col-sm-6'>");
 		out.println("<h2>"+rs.getString(3)+ "</h2>");
@@ -129,6 +135,8 @@ try{
 	}
 	else
 	{
+		//Prints out reviews, if they exist, below the book and below shows the form that allows
+		//A user to review the book and send it to the pending_reviews table
 		out.println("<b> Reviews: </b>");
 		do
 		{
@@ -147,7 +155,7 @@ try{
 
 	connection.close();
 %>
-	
+	//Book rating section for users to rate the book and send it to the pending reviews table
 	<p> Rate the book </p>
 	<form method="GET" action = "book.jsp">
             <div class="form-group">

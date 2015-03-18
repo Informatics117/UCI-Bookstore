@@ -15,12 +15,13 @@
 	<div class="container">
 	<%
 try{
-	
+	//A redirect where normally the "my page" button on the navbar would send you to the authors page
+	//But if you're an admin, it'll send you to the admin control panel page
 	if(session.getAttribute("admin") != null)
 	{
 		response.setHeader("Refresh", "0;url=/Bookstore/adminpage.jsp");
 	}
-	
+	//Grab the author's id and store it
 	int author_id = -1;
 	out.println("<div class='row'>");
 	out.println("<div class='col-sm-4'>");
@@ -36,7 +37,7 @@ try{
 	} catch (Exception e)
 	{
 	}
-	
+	//Grabbing the cookie to keep the same information if a user is logged in
 	if(session.getAttribute("user") == null && session.getAttribute("admin") == null){
 	}
 	else
@@ -58,6 +59,8 @@ try{
 
 	out.println("</div>");
 	out.println("<div class='col-sm-4 col-sm-push-4 text-right'>");
+	//If the user is the same as the id of the current author's page, then display
+	//the edit page button
 	if(Integer.parseInt(session.getAttribute("id").toString()) == author_id)
 	{
 	out.println("<form method='POST' action='editprofile.jsp'><input type='hidden' value='"+id+"' name='author_id'><button type='submit' class='btn btn-default admin-logout'>Edit this Page</button></form>");
@@ -73,8 +76,9 @@ try{
 	<%-- JAVA CODE TO DISPLAY AUTHOR PAGE. --%>
 	<%
 	Class.forName("com.mysql.jdbc.Driver").newInstance();
-	Connection connection = DriverManager.getConnection("jdbc:mysql:///" + "bookstoredb","testuser","testpass");
+	Connection connection = DriverManager.getConnection("jdbc:mysql:///" + "bookstoredb","root","2840121");
 	
+	//Connect to the database and grab the biography information for the author
 	String getAuthor = "SELECT * FROM biography WHERE user_id = '"+author_id+"'";
 	Statement s = connection.createStatement();
 	ResultSet rs = s.executeQuery(getAuthor);
@@ -84,6 +88,7 @@ try{
 
 	out.println("<div class='row'>");
 
+	//Error checks, if the aturho doesn't exist, then no author found, but if bio doesn't exist, then no bio yet
 	if (rs == null || !rs.first())
 	{
 		out.println("<h3>Author could not be found. <h3>");
@@ -96,7 +101,7 @@ try{
 		}
 		else
 		{
-			//Author name
+			//Author name 
 			out.println("<div class='col-sm-4'>");
 			out.println("<h2>"+bioInfo.getString(2)+"</h2>");
 			out.println("</div>");
@@ -104,7 +109,7 @@ try{
 			out.println("<h2>Biography</h2>");
 			out.println("</div>");
 			out.println("</div>");
-			//Picture
+			//Picture and social media buttons below the picture
 			out.println("<div class='row'>");
 			out.println("<div class='col-sm-4'>");
 			out.println("<img src='"+bioInfo.getString(4)+"' width='75%'/>");
@@ -139,7 +144,7 @@ try{
 		
 		<%
 			out.println("</div>");
-			//Biography
+			//Biography text
 			out.println("<div class='col-sm-8 bio-scrollable'>");
 			out.println("<p>"+bioInfo.getString(3)+"</p>");
 			out.println("</div>");
@@ -149,6 +154,7 @@ try{
 	}
 	out.println("<hr>");
 	
+	//Grab the works that the author created from the table
 	String getWorks = "SELECT * FROM contributions JOIN users ON users.id = contributions.user_id WHERE users.id = '"+author_id+"'";
 	Statement s1 = connection.createStatement();
 	ResultSet rs1 = s1.executeQuery(getWorks);
@@ -159,7 +165,7 @@ try{
 	}
 	else
 	{
-		
+	//If the works exist, then display them using the information associated with each work	
 	out.println("<div class='row'>");
 	out.println("<h2>Works</h2>");
 	out.println("</div>");

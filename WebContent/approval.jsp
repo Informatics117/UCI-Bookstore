@@ -6,5 +6,4 @@
  javax.servlet.http.*,
  javax.servlet.*"%>
  
- <%-- JAVA CODE TO DISPLAY AUTHOR PAGE. --%>
- <%-- USER MUST BE AN ADMINISTATOR TO VIEW THIS PAGE --%>
+ <%-- extra jsp page when an approval is made --%>

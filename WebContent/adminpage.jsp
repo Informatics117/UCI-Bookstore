@@ -1,8 +1,7 @@
+<%-- Header imported from header.jsp --%>
 <jsp:include page="header.jsp" flush="true">
     <jsp:param name="pageName" value="Admin"/>
 </jsp:include>
-
-<%-- to do: check if user is an admin, otherwise redirect them to main page. --%>
 
 <%-- REQUIRED JAVA IMPORTS --%>
 <%@page
@@ -12,6 +11,7 @@
  javax.servlet.http.*,
  javax.servlet.*"%>
  
+<%-- Confirmation method when approving or disproving an entry to the database --%>
 <script type = "text/javascript">
  function confirmComplete() {
 	 var answer=confirm("Are you sure you want to continue?");
@@ -31,7 +31,7 @@
 	<div class="container">
 <%
 try{
-	
+	//Checks if user is admin, redirects otherwise
 	if(session.getAttribute("admin") == null){
 		response.sendRedirect("/Bookstore/redirect.jsp?message=You are not an admin!");
 	}
@@ -43,14 +43,14 @@ try{
 	    if(cookie.getName().equals("admin")) userName = cookie.getValue();
 	}
 	out.println("<div class='row'>");
-	out.println("<div class='col-sm-4'>");
-	out.println("Welcome, "+userName);
-	out.println("</div>");
+
 	}
 	
 	Class.forName("com.mysql.jdbc.Driver").newInstance();
 	Connection connection = DriverManager.getConnection("jdbc:mysql:///" + "bookstoredb","testuser","testpass");
 
+	//Gets string from news field and inserts into the news database, whih then updates the splash pages newsfeed
+	//Uses a sql statement and stores the news with the current data
 	String news = request.getParameter("news");
 	if(news != null)
 	{
@@ -60,6 +60,7 @@ try{
 		out.println("<font color='red'>News has been submitted.</font>");
 	}
 	
+	//Stores strings from fields with the given NAME into string variables
 	String review_id = request.getParameter("review_id");
 	String contribution_id = request.getParameter("contribution_id");
 	String user_id = request.getParameter("user_id");
@@ -70,6 +71,8 @@ try{
 	String query;
 	Statement approval = connection.createStatement();
 	
+	//Section that displays the message if a request has been approved or rejected and 
+	//and updates the database based on what was clicked
 	out.println("<div class='col-sm-4'>");
 	if(review_id != null && review_id.length() > 0)
 	{
@@ -110,15 +113,15 @@ try{
 	
 	out.println("</div>");
 	out.println("</div>");
-	out.println("<hr>");
 	out.println("<div class='col-sm-12'>");
 //-- Java code to display unapproved things. Divded with dividers. --
-	
+	//Grabs the data from the data base of pending reviews
 	Statement s = connection.createStatement();
 	ResultSet rs = s.executeQuery("SELECT * FROM pending_reviews");
 	out.println("<div class='row'>");
 	out.println("<div class='col-sm-4 scrollable'>");
 	out.println("<p>Pending Reviews</p>");
+	//If empty, displays a no pending reviews message
 	if(rs == null || !rs.first())
 	{
 		out.println("<div class='row'>");
@@ -129,6 +132,9 @@ try{
 	{
 		do
 		{
+		//Reject or approve post buttons and the information from a review (poster id and review)
+		//When a button is clicked, it calls the confirmcomplete function defined above and if that returns true
+		//then the form is submitted or removed
 		out.println("<div class='row admin-row'>");
 		out.println("<p class='admin-p'>Poster ID: "+rs.getInt(3)+ "</p>");
 		out.println("<p class='admin-p'>Review: "+rs.getString(5)+ "</p>");
@@ -143,6 +149,7 @@ try{
 	out.println("<div class='col-sm-4 scrollable'>");
 	out.println("<p>Pending Contributions</p>");
 	
+	//Same as above with reviews, but instead deals with contributions
 	Statement s1 = connection.createStatement();
 	ResultSet rs1 = s1.executeQuery("SELECT * FROM pending_contributions");
 	if(rs1 == null || !rs1.first())
@@ -174,6 +181,7 @@ try{
 	out.println("<div class='col-sm-4 scrollable'>");
 	out.println("<p>Pending Users</p>");
 
+	//Same concept as the above two, instead now dealing with pending users
 	Statement s2 = connection.createStatement();
 	ResultSet rs2 = s2.executeQuery("SELECT * FROM pending_users");
 	if(rs2 == null || !rs2.first())
@@ -207,10 +215,11 @@ try{
 <form method="GET" action = "adminpage.jsp">
             <div class="form-group">
                 <label for="news"></label>
-               <textarea name="news" class="form-control" cols="50" rows="5" id="inf" placeholder="Write a news entry here"></textarea>
+               <textarea name="news" class="form-control" cols="50" rows="5" id="inf" placeholder="Enter news here"></textarea>
             </div>	
 	
 <% 
+//Section for admin to input news, above is the testbox to insert news and below is the button to submit what's in the textbook
 out.println("<button type='submit' class='btn btn-primary'>Submit </button>");
 out.println("</form>");
 	

@@ -1,7 +1,9 @@
+<%-- Header imported from header.jsp --%>
 <jsp:include page="header.jsp" flush="true">
     <jsp:param name="pageName" value="Front Page"/>
 </jsp:include>
 
+<%-- Page for creation for mini admins --%>
 <%-- REQUIRED JAVA IMPORTS --%>
 <%@page
 	import="java.sql.*,
@@ -10,12 +12,15 @@
  javax.servlet.http.*,
  javax.servlet.*"%>
 
+<%--Checks if the current user is an admin, if not then redirects back to home --%>
 <%
 if(session.getAttribute("admin") == null)
 {
 	response.sendRedirect("/Bookstore/redirect.jsp?message=You are not an admin!");
 }
 %>
+
+<!-- Standard bootstrap form group, each field is given a NAME which is used later by the jsp file -->
 <div class="container">
 <div class="row">
 	<h2>Submit a Contribution</h2>
@@ -47,16 +52,18 @@ if(session.getAttribute("admin") == null)
 try{
 	
 	
-	
+	//Connects to the database
 	Class.forName("com.mysql.jdbc.Driver").newInstance();
 	Connection connection = DriverManager.getConnection("jdbc:mysql:///" + "bookstoredb","testuser","testpass");
 
-	
+	//Grabs the information that was submitted by the form
+	//Strings are grabbed based on the field corresponding to the NAME that's passed in
 	String first_name = request.getParameter("first_name");
 	String last_name = request.getParameter("last_name");
 	String email = request.getParameter("email");
 	String pass = request.getParameter("pass");
 	
+	//As long as none are empty, create a new entry into the administrators list and print a message saying success
 	if(first_name != null && last_name != null && email != null && pass != null)
 	{
 		Statement s = connection.createStatement();
@@ -67,6 +74,7 @@ try{
 	}
 	
 	connection.close();
+	//If anything wrong happens print an error message
 } catch (Exception e)
  {
 	out.println("There is an error with your input");
