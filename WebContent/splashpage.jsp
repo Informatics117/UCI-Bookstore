@@ -69,11 +69,13 @@
 
 					<%
 try{
+
 	String email = request.getParameter("username");
 	String password = request.getParameter("password");
 	Class.forName("com.mysql.jdbc.Driver").newInstance();
 	Connection connection = DriverManager.getConnection("jdbc:mysql:///" + "bookstoredb","testuser","testpass");
 	
+	//checks the most recent contributions and displays them on the front page.
 	Statement s1 = connection.createStatement();
 	ResultSet rs1 = s1.executeQuery("SELECT * from contributions JOIN users on users.id = contributions.user_id ORDER BY ts DESC LIMIT 5");
 	
@@ -92,6 +94,7 @@ try{
 			out.println("</div>");
 			out.println("</div>");
 			
+			//this loop determines what is going to be placed on the front page.
 			while(rs1.next())
 			{
 				//change the div from item active to item
@@ -123,6 +126,7 @@ try{
 		<div class="item active">
 
 <%	
+//displays the top 5 most recent reviews on the front page. If there are none, display a message instead.
 	Statement s = connection.createStatement();
 	ResultSet rs = s.executeQuery("SELECT * from reviews JOIN contributions on contributions.id = reviews.contribution_id ORDER BY reviews.ts DESC LIMIT 5");
 	

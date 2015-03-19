@@ -8,6 +8,7 @@
          javax.naming.InitialContext"%>
 
 <%
+//Deletes the cookies regardless of the user and redirects back to the splash page.
 	String logout = request.getParameter("logout");
 
 	if (logout.equals("true")) {

@@ -34,6 +34,7 @@ else
 %>
 
 <%
+//if the user is an admin, they must specify and author ID because each contribution must be tied to a certain user.
 if(session.getAttribute("admin") != null)
 {
 	out.println("<div class='form-group'>");
@@ -65,6 +66,9 @@ if(session.getAttribute("admin") != null)
 <%
 if(request.getParameter("contribution") != null)
 {
+	//determines if the user is an admin or a regular user.
+	//if the user is an admin, the contribution will directly be added to the main contribution table.
+	//else, it will be added the pending_contribution table.
 	String user_id = "";
 	int id = 0;
 	try{
@@ -91,6 +95,7 @@ if(request.getParameter("contribution") != null)
 		Connection connection = DriverManager.getConnection("jdbc:mysql:///" + "bookstoredb","testuser","testpass");
 
 		try{
+			//checks the ISBN number against the google api to determine if the book exists.
 		URL url = new URL("https://www.googleapis.com/books/v1/volumes?q=isbn:"+ISBN_num+"");
 		URLConnection conn = url.openConnection();
 
@@ -105,6 +110,7 @@ if(request.getParameter("contribution") != null)
 		JsonParser parser = new JsonParser();
 		JsonObject json = (JsonObject) parser.parse(sb.toString());
 		
+		//pulls information from the returned JSON File to prepare for insertion into the database.
 		String book_title = (((JsonObject) ((JsonObject) ((JsonArray) json.get("items")).get(0)).get("volumeInfo")).get("title")).toString().replaceAll("\"", "");
 		String description = (((JsonObject) ((JsonObject) ((JsonArray) json.get("items")).get(0)).get("volumeInfo")).get("description")).toString().replaceAll("\"", "");
 		String publisher =  (((JsonObject) ((JsonObject) ((JsonArray) json.get("items")).get(0)).get("volumeInfo")).get("publisher")).toString().replaceAll("\"", "");
@@ -113,6 +119,7 @@ if(request.getParameter("contribution") != null)
 		Statement s = connection.createStatement();
 		
 		
+		//inserts into the database based on the user privelege.
 		if(session.getAttribute("admin") != null)
 		{
 			String query = "CALL submit_and_approve('"+user_id+"', '"+book_title+"', '"+ISBN_num+"', '"+book_price+"', '"+description+"', '"+photo_url+"', '"+publisher+"', '"+rating+"')";

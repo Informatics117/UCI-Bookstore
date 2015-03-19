@@ -67,6 +67,7 @@ javax.servlet.*"%>
 if(request.getMethod().equals("POST") && request.getParameter("first_name") != null && request.getParameter("last_name") != null
 	&& request.getParameter("email") != null && request.getParameter("password") != null && request.getParameter("info") != null)
 {
+	
 	try{
 	Class.forName("com.mysql.jdbc.Driver").newInstance();
 	Connection connection = DriverManager.getConnection("jdbc:mysql:///" + "bookstoredb","testuser","testpass");
@@ -93,6 +94,7 @@ if(request.getMethod().equals("POST") && request.getParameter("first_name") != n
 	}
 	else
 	{
+		//Inserts the new user into the pending_users table. 
 		String buildQuery = "INSERT INTO pending_users (first_name, last_name, email, password, info, affiliation, department, class, school)"
 				+ " VALUES ('"+first_name+"', '"+last_name+"', '"+email+"', '"+password+"', '"+info+"', '"+affiliation+"', '"+department+"', '"+classof+"', '"+school+"')";
 		Statement s1 = connection.createStatement();

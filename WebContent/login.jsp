@@ -40,6 +40,7 @@ if(request.getMethod().equals("POST") && request.getParameter("username") != nul
 {
 try
 {  
+	//gets the form's entry of username and password and checks if that entry exists. If it does, it logs the user in. If it doesn't, an error message is displayed.
 	String email = request.getParameter("username");
 	String password = request.getParameter("password");
 	Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -52,6 +53,8 @@ try
 	Statement s1 = connection.createStatement();
 	ResultSet rs1 = s1.executeQuery("SELECT * FROM administrators WHERE email = '"+email+"' AND password = '"+password+"'");
 	
+	//applies cookies in the browser based on the user login.
+	//This is intended as a temporary system to be replaced with WebAuth later.
 	if(rs1.next())
 	{
 		if(rs1.getString(4).equals(email) && rs1.getString(5).equals(password))
@@ -86,7 +89,7 @@ try
 	
 } catch (Exception e)
 {
-	out.println(e);
+	out.println("Invalid Username/Password combination.");
 }
 }
 %>

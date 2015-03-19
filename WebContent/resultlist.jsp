@@ -34,6 +34,7 @@ try{
 	String first_name = request.getParameter("first_name");
 	String last_name = request.getParameter("last_name");
 	
+	//Builds a query based on the user's input to check against the database.
 	String queryBuilder = "SELECT * FROM contributions JOIN users on users.id = contributions.user_id ";
 	
 	if(book_id.length() > 0)
@@ -54,13 +55,14 @@ try{
 	Statement s1 = connection.createStatement();
 	ResultSet rs1 = s1.executeQuery(queryBuilder);
 	
+	//checks if there is an entry based on the user's query.
 	if(rs1 == null || !rs1.first())
 	{
 		out.println("No Results Found based on your query <BR>");
 	}
 	else
 	{
-
+	//prints out each result with all its given information.
 	do
 	{
 		out.println("<div class='row'>");
